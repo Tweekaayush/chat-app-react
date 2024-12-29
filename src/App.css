@@ -27,6 +27,7 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
   background-color: black;
+  background-image: url('https://i.pinimg.com/736x/61/cd/d2/61cdd2919460814955ab86af85a781c0.jpg'); 
 }
 
 /* ------------------- Form and Register Page ------------------- */
@@ -101,6 +102,10 @@ body{
   font-size: 16px;
   cursor: pointer;
   margin-top: 16px;
+}
+
+.error-message{
+  color: red;
 }
 
 /* ------------------- Chats Page ------------------- */

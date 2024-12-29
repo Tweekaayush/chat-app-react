@@ -1,13 +1,27 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { auth, signOut } from '../config/firebase'
+import {useDispatch} from 'react-redux'
+import { signOutUser } from '../features/userSlice'
 
 const ChatListHeader = () => {
+
+  const {uid, profileImg, username} = useSelector(state=>state.user.data)
+  const dispatch = useDispatch()
+  const logout = () =>{
+    if(uid){
+      signOut(auth).then(()=>{
+        dispatch(signOutUser())
+      })
+    }
+  }
   return (
     <div className="header-user-info">
         <div className="header-user">
-            <img src="https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png" alt="" />
-            <h2>Aayush Dobriyal</h2>
+            <img src={profileImg} alt={username} />
+            <h2>{username}</h2>
         </div>
-        <div className='more-details-dots'>
+        <div className='more-details-dots' onClick={logout}>
             <div className="dot"></div>
             <div className="dot"></div>
             <div className="dot"></div>
