@@ -1,0 +1,403 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing:border-box ;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+:root{
+  --bg-color-1: #1F1F22;
+  --bg-color-2: #1A1A1E;
+  --bg-color-3: #26272D;
+  --bg-color-4: #5A189A;
+  --active-chat-color: #CCDBDC;
+  --text-color-1: rgb(255, 255, 255);
+  --text-color-2: rgb(190, 190, 190);
+  --text-color-3: rgb(163, 163, 163);
+  --text-color-4: rgb(81, 146, 245);
+  --button-color-1: linear-gradient(90deg, rgba(126,18,241,1) 45%, rgba(153,57,255,1) 70%, rgba(238,29,232,1) 100%);
+}
+
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: black;
+}
+
+/* ------------------- Form and Register Page ------------------- */
+
+.form-container{
+  background-color: var(--bg-color-2);  
+  display: flex;
+  flex-direction: column;
+  padding: 32px 16px;
+  width: 500px;
+  border-radius: 10px;
+}
+
+.form-container > h1{
+  align-self: center;
+  color: var(--text-color-1);
+  font-size: 32px;
+}
+
+.form-container > p:first-of-type{
+  align-self: center;
+  color: var(--text-color-2);
+  margin-top: 8px;
+}
+
+.form-container > p:last-of-type{
+  color: var(--text-color-2);
+  font-size: 14px;
+  margin-top: 8px;
+  align-self: flex-start;
+}
+
+.form-container > p:last-of-type > a{
+  color: var(--text-color-4);
+  text-decoration: none;
+}
+
+.form-container > p:last-of-type > a:hover{
+  text-decoration: underline;
+}
+
+.form-container > form{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.form-container > form > label > h5{
+  color: var(--text-color-1);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.form-container > form > label > input{
+  width: 100%;
+  font-size: 16px;
+  padding: 16px 8px;
+  outline: none;
+  border-radius: 3px;
+  border: none;
+  background-color: var(--bg-color-3);
+  color: var(--text-color-1);
+}
+
+.form-container > form > input{
+  padding: 16px 8px;
+  border: none;
+  border-radius: 3px;
+  background-image: var(--button-color-1);
+  color: var(--text-color-1);
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+/* ------------------- Chats Page ------------------- */
+
+.container{
+  width: 1000px;
+  height: 70vh;
+  display: flex;
+  border-radius: 15px;
+  margin: 16px;
+}
+
+.container-left{
+  flex: 1;
+  background-color: var(--bg-color-1);
+  border-radius: 15px 0 0 15px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.container-right{
+  flex: 2;
+  background-color: var(--bg-color-2);
+  border-radius: 0 15px 15px 0;
+  height: 100%;
+}
+
+/* ------------------- Chats List Header ------------------- */
+
+.header-user-info{
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.header-user{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-user > img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.header-user > h2{
+  font-size: 16px;
+  color: var(--text-color-1);
+}
+
+.more-details-dots{
+  display: flex;
+  align-items: center;
+  gap:1px;
+  cursor: pointer;
+}
+
+.dot{
+  height: 5px;
+  width: 5px;
+  background-color: var(--text-color-1);
+  border-radius: 50%;
+}
+
+/* ------------------- Search User ------------------- */
+
+.search-user-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  gap: 10px;
+}
+
+.search-user-container > div:first-child{
+  flex: 1;
+}
+
+.search-user-container > div:first-of-type > input{
+  width: 100%;
+  background-color: var(--bg-color-3);
+  border: none;
+  border-radius: 3px;
+  padding: 10px;
+  outline: none;
+  color: var(--text-color-1);
+}
+
+.search-user-container > div:last-of-type{
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: var(--button-color-1);
+    color: var(--text-color-1);
+    border-radius: 3px;
+}
+
+/* ------------------- Chat List ------------------- */
+
+.chat-list-container{
+  flex: 1;
+  padding: 0 0 16px 0;
+  overflow-y: scroll;
+}
+
+.chat-list-container::-webkit-scrollbar{
+  width: 0;
+
+}
+
+.chat-list-item{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px;
+  cursor: pointer;
+  border-bottom: 2px solid var(--bg-color-3);
+}
+
+.chat-list-item:hover{
+  background-color: var(--bg-color-3);
+}
+
+.chat-list-item > img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.chat-list-item > div > h2{
+  color: var(--text-color-1);
+  font-size: 18px;
+}
+
+.chat-list-item > div > p{
+  color: var(--text-color-2);
+  font-size: 16px;
+}
+
+/* ------------------- Active Chat ------------------- */
+
+.active-chat-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ------------------- Active Chat Header ------------------- */
+
+.active-chat-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--bg-color-3);
+  padding: 16px 0;
+}
+
+.active-chat-header-info{
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+  gap: 20px;
+}
+
+.active-chat-header-info > img{
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.active-chat-header-info > h2{
+  color: var(--text-color-1);
+  font-size: 20px;
+}
+
+/* ------------------- Active Chat Messages ------------------- */
+
+
+.active-chat-messages-container::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: var(--bg-color-3);
+}
+
+.active-chat-messages-container::-webkit-scrollbar-thumb
+{
+	background-color: var(--bg-color-4);
+}
+
+
+.active-chat-messages-container{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.active-chat-message{
+  display: flex;
+  gap: 10px;
+  padding: 16px;
+}
+
+.active-chat-message-img{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.active-chat-message-img > img{
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.active-chat-message-info > p:first-of-type{
+  color: var(--text-color-1);
+  background-color: var(--bg-color-3);
+  padding: 16px;
+  border-radius: 10px 10px 10px 0;
+  font-size: 16px;
+}
+
+.active-chat-message-info > p:last-of-type{
+  color: var(--text-color-3);
+  margin-top: 5px;
+  font-size: 12px;
+  text-align: left;
+}
+
+.owner{
+  flex-direction: row-reverse;
+}
+
+.owner .active-chat-message-info > p:first-of-type{
+  color: var(--text-color-1);
+  background-image: var(--button-color-1);
+  padding: 16px;
+  border-radius: 10px 10px 0 10px;
+  font-size: 16px;
+}
+
+.owner .active-chat-message-info > p:last-of-type{  
+  text-align: right;
+}
+
+
+/* ------------------- Active Chat Input ------------------- */
+
+.active-chat-input-container{
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.active-chat-input-container > form {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+}
+
+.active-chat-input{
+  flex: 1;
+  background-color: var(--bg-color-3);
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-radius: 5px;
+}
+
+.active-chat-input > input{
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  font-size: 16px;
+  outline: none;
+  color: var(--text-color-1);
+}
+
+.active-chat-input-container > form > input[type='submit']{
+  width: 60px;
+  background-image: var(--button-color-1);
+  border: none;
+  border-radius: 5px;
+  color: var(--text-color-1);
+  font-size: 16px;
+}
+
+.active-chat-input > label{
+  color: var(--text-color-1);
+}
