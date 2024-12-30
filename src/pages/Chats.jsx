@@ -5,6 +5,7 @@ import SearchUser from '../components/SearchUser'
 import ActiveChat from '../components/ActiveChat'
 import AddUser from '../components/AddUser'
 import {useSelector} from 'react-redux'
+import UserInfo from '../components/UserInfo'
 
 const Chats = () => {
 
@@ -21,7 +22,13 @@ const Chats = () => {
         </div>
         <div className="container-right">
             {
-                Object.keys(currentChat).length !== 0? <ActiveChat/> : <></>
+                Object.keys(currentChat).length !== 0?(
+                    <ActiveChat/>
+                ): (
+                    <div className='empty-chat-container'>
+                        <h1>Select a chat to start a conversation.</h1>
+                    </div>
+                )
             }
         </div>
     </div>

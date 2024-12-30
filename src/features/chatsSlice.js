@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
-import db, { collection, getDoc, getDocs, query, where, or, and, setDoc, doc, arrayUnion, updateDoc, serverTimestamp, onSnapshot } from '../config/firebase'
+import db, { collection, getDoc, getDocs, query, where, or, and, setDoc, doc, arrayUnion, updateDoc, serverTimestamp, onSnapshot, arrayRemove } from '../config/firebase'
 
 const initialState = {
     loading: false,
@@ -8,7 +8,9 @@ const initialState = {
         chatList: [],
         users: [],
         messages: [],
-        currentChat: {}
+        currentChat: {},
+        isCurrentUserBlocked: false,
+        isReceiverBlocked: false
     }
 }
 
@@ -157,10 +159,47 @@ export const sendMessages = createAsyncThunk('sendMessages', async(payload, {get
   }
 })
 
+export const updateChatList = createAsyncThunk('updateChatList', async(payload, {getState})=>{
+
+    const {uid} = getState().user.data
+
+    const userChatsRef = doc(db, "userChats", uid);
+        
+    try {
+      await updateDoc(userChatsRef, {
+        chats: payload,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+})
+
+export const toggleBlock = createAsyncThunk('toggleBlock', async(payload, {getState})=>{
+
+    try {
+        const {uid} = getState().user.data
+
+        await updateDoc(doc(db, 'users', uid), {
+            blocked: payload.isBlocked ? arrayRemove(payload.uid) : arrayUnion(payload.uid)
+        })
+
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 const chatsSlice = createSlice({
     name: 'chats',
     initialState,
     reducers: {
+        checkBlocked: (state,action)=>{
+            if(action.payload.receiverBlockList.includes(action.payload.currentId)){
+                state.data.isCurrentUserBlocked = true
+            }else state.data.isCurrentUserBlocked = false
+            if(action.payload.currentBlockList.includes(action.payload.receiverId)){
+                state.data.isReceiverBlocked = true
+            }else state.data.isReceiverBlocked = false
+        },
         setMessages: (state, action)=>{
             state.data.currentChat = action.payload.currentChat
             state.data.messages = action.payload.messages
@@ -199,6 +238,6 @@ const chatsSlice = createSlice({
     }
 })
 
-export const {setMessages, setChatList, clearUsers, clearAllChatData, clearCurrentChat} = chatsSlice.actions
+export const {checkBlocked, setMessages, setChatList, clearUsers, clearAllChatData, clearCurrentChat} = chatsSlice.actions
 
 export default chatsSlice.reducer
