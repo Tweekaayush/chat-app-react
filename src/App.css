@@ -24,10 +24,9 @@ body{
   align-items: center;
   width: 100%;
   height: 100vh;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-color: black;
-  background-image: url('https://i.pinimg.com/736x/61/cd/d2/61cdd2919460814955ab86af85a781c0.jpg'); 
+
+  background-color: #000000;
+  background-image: url("https://www.transparenttextures.com/patterns/axiom-pattern.png");
 }
 
 /* ------------------- Form and Register Page ------------------- */
@@ -116,6 +115,7 @@ body{
   display: flex;
   border-radius: 15px;
   margin: 16px;
+  position: relative;
 }
 
 .container-left{
@@ -207,6 +207,7 @@ body{
     background-image: var(--button-color-1);
     color: var(--text-color-1);
     border-radius: 3px;
+    cursor: pointer;
 }
 
 /* ------------------- Chat List ------------------- */
@@ -405,4 +406,106 @@ body{
 
 .active-chat-input > label{
   color: var(--text-color-1);
+}
+
+/* ------------------- Add user ------------------- */
+
+.pg-overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.582);
+  backdrop-filter: blur(15px);
+}
+
+.add-user-container{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-color-2);
+  padding: 16px;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.quit-btn-container{
+  margin-bottom: 16px;
+}
+
+.quit-btn-container > svg{
+  color: var(--text-color-1);
+  float: right;
+  font-size: 32px;
+}
+
+.add-user-input{
+  background-color: var(--bg-color-3);
+  display: flex;
+  color: var(--text-color-1);
+  padding: 16px 8px;
+  border-radius: 5px;
+}
+
+.add-user-input > svg{
+  font-size: 16px;
+}
+
+.add-user-input > input{
+  width: 100%;
+  background-color: transparent;
+  color: var(--text-color-1);
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.add-user-search-results{
+  display: flex;
+  flex-direction: column;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.add-user-item{
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-user-item-left{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.add-user-item-left > img{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.add-user-item-left > h2{
+  color: var(--text-color-1);
+  font-size: 16px;
+}
+
+.add-user-item-right{
+  display: flex;
+  align-items: center;
+}
+
+.add-user-item-right > button{
+
+  background-image: var(--button-color-1);
+  color: var(--text-color-1);
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
 }

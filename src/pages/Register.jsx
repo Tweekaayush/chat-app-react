@@ -69,8 +69,6 @@ const Register = () => {
 
     const validate = validateForm()
 
-    console.log(process.env.REACT_APP_API_KEY)
-
     if(validate){
       createUserWithEmailAndPassword(auth, formData.email, formData.password).then((userCredential)=>{
         const user = userCredential.user

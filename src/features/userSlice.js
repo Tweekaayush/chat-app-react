@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import db, { collection, doc, getDoc, setDoc } from "../config/firebase";
+import { getChatList } from "./chatsSlice";
 
 const initialState = {
     loading: false,
@@ -8,30 +9,17 @@ const initialState = {
         username: '',
         profileImg: '',
         email: '',
-        chats: []
     },
     error: ''
 }
 
-export const getUserDetails = createAsyncThunk('getUserDetails', async(payload)=>{
+export const getUserDetails = createAsyncThunk('getUserDetails', async(payload, {getState, dispatch})=>{
 
     const snapshot = await getDoc(doc(db, 'users', payload.uid))
 
     if(snapshot.exists()){
-        const chatSnapshot = await getDoc(doc(db, 'userChats', payload.uid))
 
-        // const chats = chatSnapshot.data()
-
-        // const promises = chats.map(async(chat)=>{
-        //     const userDocSnap = await getDoc(doc(db, 'users', chat.receiverId))
-        //     return {...chat, ...userDocSnap.data()}
-        // })
-
-        // const chatData = await promises.all(promises)
-
-        // chatData.sort((a, b) => b.updatedAt - a.updatedAt)
-
-        return { ...snapshot.data(), chats: []}
+        return snapshot.data()
     }else{
         await setDoc(doc(collection(db, 'users'), payload.uid),{
             ...payload,
@@ -44,10 +32,10 @@ export const getUserDetails = createAsyncThunk('getUserDetails', async(payload)=
 
     return {
         ...payload,
-        blocked: [],
-        chats: []
+        blocked: []
     }
 })
+
 
 const userSlice = createSlice({
     name: 'user',
