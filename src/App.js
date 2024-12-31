@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
-import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import Chats from './pages/Chats'
-import PrivateRoute from './components/PrivateRoute'
-import { onAuthStateChanged, auth } from './config/firebase'
-import { useDispatch, useSelector } from 'react-redux'
-import { getUserDetails } from './features/userSlice'
+import React, { lazy, useEffect, Suspense } from 'react';
+import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
+import { onAuthStateChanged, auth } from './config/firebase';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserDetails } from './features/userSlice';
+import Settings from './pages/Settings';
+const Login = lazy(()=>import('./pages/Login'));
+const Register = lazy(()=>import('./pages/Register'));
+const Chats = lazy(()=>import('./pages/Chats'));
 
 
 const App = () => {
@@ -30,13 +31,16 @@ const App = () => {
 
   return (
     <Router>
-      <Routes>
-        <Route exact path='/login' element={<Login/>}/>
-        <Route exact path='/register' element={<Register/>}/>
-        <Route element={<PrivateRoute/>}>
-          <Route exact path='/' element={<Chats/>}/> 
-        </Route>
-      </Routes>
+      <Suspense fallback={<>loading...</>}>
+        <Routes>
+          <Route exact path='/login' element={<Login/>}/>
+          <Route exact path='/register' element={<Register/>}/>
+          <Route element={<PrivateRoute/>}>
+            <Route exact path='/' element={<Chats/>}/> 
+            <Route exact path='/settings' element={<Settings/>}/> 
+          </Route>
+        </Routes>
+      </Suspense>
     </Router>
   ) 
 }

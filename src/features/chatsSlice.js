@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import db, { collection, getDoc, getDocs, query, where, or, and, setDoc, doc, arrayUnion, updateDoc, serverTimestamp, onSnapshot, arrayRemove } from '../config/firebase'
+import { getUserDetails } from './userSlice'
 
 const initialState = {
     loading: false,
@@ -56,7 +57,8 @@ export const addUser = createAsyncThunk('addUser', async(payload, {getState})=>{
 export const getUsers = createAsyncThunk('getUsers', async(payload, {getState})=>{
 
     try {
-        const uid = getState().user.data.uid
+        const {uid} = getState().user.data
+        const {chatList} = getState().chats.data
         const querySnapshot = await getDocs(query(collection(db, 'users'), or(
             and(
               where('username', '>=', payload),
@@ -74,7 +76,18 @@ export const getUsers = createAsyncThunk('getUsers', async(payload, {getState})=
 
         if(!querySnapshot.empty){
             const userList = querySnapshot.docs.map((doc)=> doc.data())
-            return userList.filter((user)=>user.uid !== uid)
+            const filteredList = userList.filter((user)=>user.uid !== uid).filter((user)=>{
+                let flag = true
+                chatList.forEach((chat) => {
+                    if(chat.receiverId === user.uid){
+                        flag = false
+                        return
+                    }
+                })
+                return flag
+            })
+
+            return filteredList
         }
 
     } catch (error) {
@@ -174,13 +187,14 @@ export const updateChatList = createAsyncThunk('updateChatList', async(payload, 
     }
 })
 
-export const toggleBlock = createAsyncThunk('toggleBlock', async(payload, {getState})=>{
+export const toggleBlock = createAsyncThunk('toggleBlock', async(payload, {getState, dispatch})=>{
 
     try {
         const {uid} = getState().user.data
+        const {isReceiverBlocked, currentChat: {receiverId}} = getState().chats.data
 
         await updateDoc(doc(db, 'users', uid), {
-            blocked: payload.isBlocked ? arrayRemove(payload.uid) : arrayUnion(payload.uid)
+            blocked: isReceiverBlocked ? arrayRemove(receiverId) : arrayUnion(receiverId)
         })
 
     } catch (error) {

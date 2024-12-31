@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import { checkBlocked, getChatList, getMessages, updateChatList } from '../features/chatsSlice'
+import { format } from 'timeago.js'
 
 const ChatsList = () => {
 
@@ -45,11 +46,15 @@ const ChatsList = () => {
         {
             chatList?.length !== 0?(
                 chatList?.map((chat, i)=>{
-                return <div key={i} className='chat-list-item' onClick={()=>handleClick(chat)} style={{backgroundColor: `${chat.isSeen?'':'indigo'}`}}>
+                return <div key={i} className='chat-list-item' onClick={()=>handleClick(chat)} style={{border: `${chat.isSeen?'':'4px solid indigo'}`}}>
                             <img src={chat.profileImg} alt={chat.username} />
                             <div>
                                 <h2>{chat.username}</h2>
-                                <p>{chat.lastMessage}</p>
+                                <p>{chat.lastMessage}  
+                                    <span>
+                                        • {format(chat.updatedAt)}
+                                    </span>
+                                </p>
                             </div>
                         </div>
                         

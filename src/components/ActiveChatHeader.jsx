@@ -2,16 +2,16 @@ import React from 'react'
 import {useSelector} from 'react-redux'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {useDispatch} from 'react-redux'
-import { clearCurrentChat } from '../features/chatsSlice';
+import { clearCurrentChat, toggleBlock } from '../features/chatsSlice';
 import BlockIcon from '@mui/icons-material/Block';
 
 const ActiveChatHeader = () => {
 
-  const {currentChat: {username, profileImg}} = useSelector(state=>state.chats.data)
+  const {currentChat: {username, profileImg}, isCurrentUserBlocked, isReceiverBlocked} = useSelector(state=>state.chats.data)
   const dispatch = useDispatch()
 
   const handleBlock = () =>{
-    
+    dispatch(toggleBlock())
   }
 
   const handleBack = () =>{
@@ -28,7 +28,12 @@ const ActiveChatHeader = () => {
             </div>
         </div>
         <div>
-          <BlockIcon onClick={handleBlock}/>
+          <button 
+            onClick={handleBlock}
+            disabled={isCurrentUserBlocked}
+          >
+            <BlockIcon />
+          </button>
         </div>
     </div>
   )

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { auth, createUserWithEmailAndPassword, updateProfile } from '../config/firebase'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserDetails } from '../features/userSlice'
+import {profileImages} from '../datalist'
 
 const Register = () => {
 
@@ -56,6 +57,17 @@ const Register = () => {
     return obj.name === '' && obj.email === '' && obj.password === '' && obj.confirmPassword === ''
   }
 
+  const getProfilePicture = (name) =>{
+    let image = 'https://i.pinimg.com/736x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg'
+    profileImages.forEach((item)=>{
+      if(item.id === name.charAt(0).toLowerCase()){
+        image = item.image
+        return
+      }
+    })
+    return image
+  }
+
   const handleChange = (e) =>{
     const {name, value} = e.target
     setFormData({
@@ -70,17 +82,18 @@ const Register = () => {
     const validate = validateForm()
 
     if(validate){
+      const avatar = getProfilePicture(formData.name)
       createUserWithEmailAndPassword(auth, formData.email, formData.password).then((userCredential)=>{
         const user = userCredential.user
         updateProfile(user, {
           displayName: formData.name,
-          photoURL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1280px-Image_created_with_a_mobile_phone.png'
+          photoURL: avatar
         });
         dispatch(getUserDetails({
             uid: user.uid,
             username: formData.name,
             email: user.email,
-            profileImg: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1280px-Image_created_with_a_mobile_phone.png'
+            profileImg: avatar
         }))
       }).catch(e=>console.log(e))
     }

@@ -15,6 +15,7 @@
   --text-color-2: rgb(190, 190, 190);
   --text-color-3: rgb(163, 163, 163);
   --text-color-4: rgb(81, 146, 245);
+  --text-color-5: rgb(129, 129, 129);
   --button-color-1: linear-gradient(90deg, rgba(126,18,241,1) 45%, rgba(153,57,255,1) 70%, rgba(238,29,232,1) 100%);
 }
 
@@ -154,6 +155,7 @@ body{
   display: flex;
   justify-content: space-between;
   padding: 16px;
+  position: relative;
 }
 
 .header-user{
@@ -179,6 +181,7 @@ body{
   align-items: center;
   gap:1px;
   cursor: pointer;
+  z-index: 0;
 }
 
 .dot{
@@ -186,6 +189,38 @@ body{
   width: 5px;
   background-color: var(--text-color-1);
   border-radius: 50%;
+}
+
+.more-detail-options-list{
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  background-color: var(--bg-color-2);
+  color: var(--text-color-2);
+  position: absolute;
+  top: 50px;
+  right: 16px;
+  box-shadow: 1px 1px 5px rgb(36, 36, 36);
+  border-radius: 3px;
+  z-index: 1;
+}
+
+.more-detail-options{
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--bg-color-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.more-detail-options > svg{
+  font-size: 20px;
+}
+
+.more-detail-options:last-of-type{
+  border: none;
 }
 
 /* ------------------- Search User ------------------- */
@@ -206,22 +241,27 @@ body{
   width: 100%;
   background-color: var(--bg-color-3);
   border: none;
-  border-radius: 3px;
-  padding: 10px;
+  border-radius: 5px;
+  padding: 14px;
   outline: none;
   color: var(--text-color-1);
+  font-size: 16px;
 }
 
 .search-user-container > div:last-of-type{
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-image: var(--button-color-1);
     color: var(--text-color-1);
-    border-radius: 3px;
+    border-radius: 50%;
     cursor: pointer;
+}
+
+.search-user-container > div:last-of-type > span{
+    font-size: 30px;
 }
 
 /* ------------------- Chat List ------------------- */
@@ -264,6 +304,12 @@ body{
 .chat-list-item > div > p{
   color: var(--text-color-2);
   font-size: 16px;
+}
+
+.chat-list-item > div > p > span{
+  color: var(--text-color-5);
+  font-size: 12px;
+  margin-left: 5px;
 }
 
 /* ------------------- Active Chat ------------------- */
@@ -313,7 +359,7 @@ body{
 
 .active-chat-header-info > div > h2{
   color: var(--text-color-1);
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .active-chat-header-info > div:hover + .active-chat-header-info > div > h2{
@@ -326,9 +372,17 @@ body{
   align-items: center;
 }
 
-.active-chat-header > div:last-of-type > svg{
+.active-chat-header > div:last-of-type > button{
   color: red;
   cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.active-chat-header > div:last-of-type > button:disabled{
+  cursor:not-allowed;
+  color: rgb(255, 110, 110);
 }
 
 /* ------------------- Active Chat Messages ------------------- */
@@ -381,7 +435,7 @@ body{
 }
 
 .active-chat-message-info > p:last-of-type{
-  color: var(--text-color-3);
+  color: var(--text-color-5);
   margin-top: 5px;
   font-size: 12px;
   text-align: left;
@@ -416,7 +470,9 @@ body{
 .active-chat-input-container > form {
   flex: 1;
   display: flex;
+  align-items: center;
   gap: 20px;
+  position: relative;
 }
 
 .active-chat-input{
@@ -424,8 +480,9 @@ body{
   background-color: var(--bg-color-3);
   display: flex;
   align-items: center;
-  padding: 16px;
+  padding: 16px 40px 16px 16px;
   border-radius: 5px;
+  position: relative;
 }
 
 .active-chat-input > input{
@@ -437,13 +494,35 @@ body{
   color: var(--text-color-1);
 }
 
-.active-chat-input-container > form > input[type='submit']{
-  width: 60px;
+.active-chat-input-container > form > label{
+  width: 55px;
+  height: 55px;
   background-image: var(--button-color-1);
   border: none;
-  border-radius: 5px;
+  border-radius: 50%;
   color: var(--text-color-1);
-  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+
+.active-chat-input-container > form > label > div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: var(--button-color-1);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  box-shadow: 5px 5px 50px 10px rgba(0, 0, 0, 0.61);
+}
+
+.active-chat-input-container > form > label > div > svg{
+  transform: rotate(-45deg);
+  font-size: 22px;
 }
 
 .active-chat-input > label{
@@ -460,6 +539,20 @@ body{
   border-radius: 5px;
 }
 
+.picker{
+  position: absolute;
+  right: 8px;
+  bottom: 12px;
+  color: var(--text-color-3);
+  display: flex;
+  flex-direction: column;
+}
+
+.picker > svg{
+  align-self: flex-end;
+}
+
+
 /* ------------------- Add user ------------------- */
 
 .pg-overlay{
@@ -473,6 +566,7 @@ body{
   align-items: center;
   background-color: rgba(0, 0, 0, 0.582);
   backdrop-filter: blur(15px);
+  z-index: 5;
 }
 
 .add-user-container{
@@ -545,6 +639,7 @@ body{
 .add-user-item-left > h2{
   color: var(--text-color-1);
   font-size: 16px;
+  text-overflow: ellipsis ;
 }
 
 .add-user-item-right{
@@ -557,9 +652,10 @@ body{
   background-image: var(--button-color-1);
   color: var(--text-color-1);
   border: none;
-  padding: 5px;
+  padding: 5px 8px;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 /* ------------------- User Info ------------------- */

@@ -3,12 +3,20 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import SendIcon from '@mui/icons-material/Send';
 import {useDispatch, useSelector} from 'react-redux'
 import { sendMessages } from '../features/chatsSlice';
+import EmojiPicker from 'emoji-picker-react'
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 
 const ActiveChatInput = () => {
 
   const [text, setText] = useState('')
   const dispatch = useDispatch()
   const {isCurrentUserBlocked, isReceiverBlocked} = useSelector(state=>state.chats.data)
+  const [open, setOpen] = useState(false)
+
+  const handleEmoji = (e) =>{
+    setText(prev => prev + e.emoji)
+    setOpen(false)
+  }
 
   const handleChange = (e) => {
     setText(e.target.value)
@@ -23,8 +31,6 @@ const ActiveChatInput = () => {
 
     setText("")
   }
-
-  console.log(isCurrentUserBlocked, isReceiverBlocked)
 
   return (
     <div className="active-chat-input-container">
@@ -41,12 +47,18 @@ const ActiveChatInput = () => {
             <form onSubmit={handleSend}>
               <div className="active-chat-input">
                   <input type="text" name="text" id="text" placeholder='Type a message' value={text} onChange={handleChange}/>
-                  <label htmlFor="file">
-                      <AttachFileIcon />
-                  </label>
+                  <div className='picker'>
+                    <EmojiPicker open={open} onEmojiClick={handleEmoji} />
+                    <SentimentSatisfiedAltIcon onClick={()=>setOpen(prev=>!prev)}/>
+                  </div>
                   <input type="file" name="file" id="file" style={{display: 'none'}}/>
               </div>
-              <input type="submit" value='Send'/>
+              <label>
+                <input type="submit" value='Send' style={{display: 'none'}}/>
+                <div>
+                  <SendIcon />
+                </div>
+              </label>
             </form>
         )
       }

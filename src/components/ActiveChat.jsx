@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import ActiveChatHeader from './ActiveChatHeader'
 import ActiveChatInput from './ActiveChatInput'
 import {useSelector} from 'react-redux'
+import {format} from 'timeago.js'
 
 const ActiveChat = () => {
 
@@ -25,7 +26,7 @@ const ActiveChat = () => {
                         </div>
                         <div className='active-chat-message-info'>
                             <p>{message.text}</p>
-                            <p>{message.time}</p>
+                            <p>{format(message.createdAt.toDate())}</p>
                         </div>
                     </div>)
                 })

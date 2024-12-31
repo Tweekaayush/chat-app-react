@@ -55,7 +55,7 @@ const AddUser = ({addUserStatus, setAddUserStatus}) => {
                                     </div>
                         })
                     ):(
-                        <p>No Users Found!</p>
+                        <p></p>
                     )   
                 }
             </div>
