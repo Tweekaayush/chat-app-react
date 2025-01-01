@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import { checkBlocked, getChatList, getMessages, unsubChat, updateChatList } from '../features/chatsSlice'
 import { format } from 'timeago.js'
 
-const ChatsList = ({search}) => {
+const ChatsList = ({search, setOpen}) => {
 
     const {chatList} = useSelector(state=>state.chats.data)
     const {uid, blocked} = useSelector(state=>state.user.data)
@@ -11,6 +11,9 @@ const ChatsList = ({search}) => {
     const [list, setList] = useState([])
 
     const handleClick = (chat) =>{
+
+        setOpen(false)
+
         dispatch(getMessages(chat))
         
         const chatIndex = chatList.findIndex(
@@ -61,8 +64,8 @@ const ChatsList = ({search}) => {
         {
             list?.length !== 0?(
                 list?.map((chat, i)=>{
-                return <div key={i} className={`${chat.isSeen?'chat-list-item':'chat-list-item unseen'}`} onClick={()=>handleClick(chat)} >
-                            <img src={chat.profileImg} alt={chat.username} />
+                return <div key={i} className={`${chat.isSeen?'chat-list-item':'chat-list-item unseen'}`} onClick={()=>handleClick(chat)} title={chat.username}>
+                            <img src={chat.profileImg} alt={chat.username} className='profile-avatar' />
                             <div>
                                 <h2>{chat.username}</h2>
                                 {  chat.lastMessage &&

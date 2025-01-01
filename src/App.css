@@ -221,11 +221,12 @@ header > a{
 /* ------------------- Chats Page ------------------- */
 
 .container{
-  width: 1000px;
+  width: 992px;
   height: 70vh;
   display: flex;
   margin: 16px;
   position: relative;
+  overflow: hidden;
 }
 
 .container-left{
@@ -235,6 +236,7 @@ header > a{
   flex-direction: column;
   border-radius: 10px 0 0 10px;
   height: 100%;
+  z-index: 4;
 }
 
 .container-right{
@@ -256,6 +258,29 @@ header > a{
   color: var(--text-color-3);
   font-weight: 500;
   letter-spacing: 1px;
+  text-align: center;
+  padding: 16px;
+}
+
+
+.container-left > button{
+  position: absolute;
+  top: 0;
+  right: -26px;
+  display: none; 
+  border: none;
+  border-left: 2px solid var(--bg-color-3);
+  background-color: var(--bg-color-1);
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+  border-radius: 10px 0 0 10px;
+}
+
+.container-left > button > svg{
+  font-size: 24px;
+  color: var(--text-color-1);
+  transition: all 0.3s ease-in-out;
 }
 
 /* ------------------- Chats List Header ------------------- */
@@ -270,10 +295,10 @@ header > a{
 .header-user{
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
-.header-user > img{
+.profile-avatar{
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -400,11 +425,6 @@ header > a{
   background-color: var(--bg-color-3);
 }
 
-.chat-list-item > img{
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
 
 .chat-list-item > div > h2{
   color: var(--text-color-1);
@@ -464,12 +484,6 @@ header > a{
   cursor: pointer;
 }
 
-.active-chat-header-info > div > img{
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 50%;
-}
 
 .active-chat-header-info > div > div> h2{
   color: var(--text-color-1);
@@ -540,13 +554,6 @@ header > a{
   justify-content: center;
 }
 
-.active-chat-message-img > img{
-  width: 35px;
-  height: 35px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
 .active-chat-message-info > p:first-of-type{
   background-color: var(--bg-color-3);
   border-radius: 10px 10px 10px 0;
@@ -567,11 +574,8 @@ header > a{
 }
 
 .owner .active-chat-message-info > p:first-of-type{
-  color: var(--text-color-1);
   background-image: var(--button-color-1);
-  padding: 16px;
   border-radius: 10px 10px 0 10px;
-  font-size: 16px;
 }
 
 .owner .active-chat-message-info > p:last-of-type{  
@@ -585,7 +589,6 @@ header > a{
   padding: 16px;
   display: flex;
   align-items: center;
-  margin-top: 16px;
 }
 
 .active-chat-input-container > form {
@@ -769,7 +772,6 @@ header > a{
 }
 
 .add-user-item-right > button{
-
   background-image: var(--button-color-1);
   color: var(--text-color-1);
   border: none;
@@ -798,7 +800,7 @@ header > a{
 /* ------------------- Settings-header ------------------- */
 
 .settings-container{
-  width: 1000px;
+  width: 992px;
   height: 70vh;
   display: flex;
   flex-direction: column;
@@ -965,3 +967,120 @@ header > a{
 .app-setting-grid > .active-theme{
   border: 1px solid var(--text-color-3);
 }
+
+@media screen and (max-width: 1024px) {
+  .container{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container{
+    width: 100%;
+  }
+
+  .container-left{
+    position: absolute;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .container-left > button{
+    display: flex;
+  }
+
+  .container-right{
+    margin-left: 16px;
+  }
+
+  .empty-chat-container > h1 {
+    font-size: 24px;
+  }
+
+  .settings-content{
+    flex-direction: column;
+  }
+
+  .settings-nav-container{
+    flex: 0.5;
+  }
+
+  .settings-nav-links{
+    flex-direction: row;
+  }
+
+  .settings-nav-links > li{
+    border-bottom: none;
+    border-right: 2px solid var(--bg-color-3);
+  }
+}
+
+.left-container-show{
+  transform: translateX(0);
+}
+
+@media screen and (max-width:480px) {
+
+  .empty-chat-container > h1 {
+    font-size: 20px;
+  }
+
+  .chat-list-item{
+    gap: 10px;
+  }
+
+  .active-chat-header-info{
+    gap: 10px;
+  }
+
+  .profile-avatar{
+    width: 30px;
+    height: 30px;
+  }
+
+  .active-chat-header-info > div > div > h2{
+    font-size: 14px;
+  }
+
+  .active-chat-header-info > div > div > p{
+    font-size: 12px;
+  }
+
+  .active-chat-message-info > p:first-of-type{
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 5px 5px 5px 0;
+  }
+
+  .owner .active-chat-message-info > p:first-of-type{
+    border-radius: 5px 5px 0 5px;
+  }
+
+  .active-chat-message-info > p:last-of-type{
+    font-size: 10px;
+  }
+
+  .active-chat-input > input{
+    font-size: 14px;
+  }
+
+  .active-chat-input-container > form > label{
+    width: 45px;
+    height: 45px;
+  }
+
+  .active-chat-input-container > form > label > div{
+    width: 35px;
+    height: 35px;
+  }
+
+  .active-chat-input-container > form > label > div > svg{
+    font-size: 18px;
+  }
+
+}
+
+.left-container-show > button{
+  border-radius: 0;
+}
+

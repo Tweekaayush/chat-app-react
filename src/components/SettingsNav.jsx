@@ -16,7 +16,6 @@ const SettingsNav = ({currentSettings, setCurrentSettings}) => {
                 App settings
             </li>
         </ul>
-        <button>Logout</button>
     </div>
   )
 }

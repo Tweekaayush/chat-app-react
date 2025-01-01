@@ -5,21 +5,38 @@ import SearchUser from '../components/SearchUser'
 import ActiveChat from '../components/ActiveChat'
 import AddUser from '../components/AddUser'
 import {useSelector} from 'react-redux'
-import UserInfo from '../components/UserInfo'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { useRef } from 'react'
 
 const Chats = () => {
 
     const [addUserStatus, setAddUserStatus] = useState(false)
     const {currentChat} = useSelector(state=>state.chats.data)
     const [search, setSearch] = useState('')
+    const [open, setOpen] = useState(true)
+    const ref = useRef(null)
+
+    const handleClickOutside = () =>{
+        if(window.innerWidth >= 768)
+            setOpen(true)
+    }
+
+    useEffect(()=>{
+        window.addEventListener('resize', handleClickOutside)
+        return ()=>window.removeEventListener('resize', handleClickOutside)
+      }, [])
+    
 
   return (
     <div className="container">
         <AddUser addUserStatus={addUserStatus} setAddUserStatus={setAddUserStatus}/>
-        <div className="container-left">
+        <div className={`container-left ${open?'left-container-show':''}`} ref={ref}>
             <ChatListHeader />
             <SearchUser setAddUserStatus={setAddUserStatus} search={search} setSearch={setSearch}/>
-            <ChatsList search={search} />
+            <ChatsList search={search} setOpen={setOpen} />
+            <button onClick={()=>setOpen(!open)}>
+                <ChevronRightIcon style={{transform: `${open?'rotate(180deg)':''}`}}/>
+            </button>
         </div>
         <div className="container-right">
             {

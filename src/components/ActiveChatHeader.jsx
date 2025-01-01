@@ -23,7 +23,7 @@ const ActiveChatHeader = () => {
         <div className="active-chat-header-info">
             <ArrowBackIcon onClick={handleBack} />
             <div>
-              <img src={profileImg} alt={username} />
+              <img src={profileImg} alt={username} className='profile-avatar'/>
               <div>
                 <h2>{username}</h2>
                 <p>{status}</p>

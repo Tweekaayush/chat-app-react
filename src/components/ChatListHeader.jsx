@@ -48,7 +48,7 @@ const ChatListHeader = () => {
     <div className="header-user-info">
         <div className="header-user">
             
-            <img src={profileImg} alt={username} />
+            <img src={profileImg} alt={username} className='profile-avatar'/>
             <h2>{username}</h2>
         </div>
         <div 

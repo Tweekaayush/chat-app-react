@@ -23,7 +23,7 @@ const ActiveChat = () => {
                 messages.map((message, i)=>{
                     return (<div key={message?.createdAt?.seconds} className={`active-chat-message ${message.senderId===uid?'owner':''}`}>
                         <div className='active-chat-message-img'>
-                            <img src={message.senderId === uid?profileImg:receiverProfileImg} alt="" />
+                            <img src={message.senderId === uid?profileImg:receiverProfileImg} alt="" className='profile-avatar'/>
                         </div>
                         <div className='active-chat-message-info'>
                             <p>{message.text}</p>
