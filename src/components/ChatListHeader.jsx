@@ -55,6 +55,7 @@ const ChatListHeader = () => {
           className='more-details-dots' 
           onClick={handleClick} 
           ref={btnRef}
+          title='Options'
         >
             <div className="dot"></div>
             <div className="dot"></div>
@@ -62,7 +63,7 @@ const ChatListHeader = () => {
         </div>
         <ul 
           className="more-detail-options-list" 
-          style={{display: `${open?'flex':'none'}`}} 
+          style={{visibility: `${open?'visible':'hidden'}`, opacity: `${open?'1':'0'}`}} 
           ref={ref}
         >
           <li className="more-detail-options" onClick={()=>navigate('/settings')}>

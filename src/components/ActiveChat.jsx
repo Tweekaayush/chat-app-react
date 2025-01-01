@@ -11,7 +11,7 @@ const ActiveChat = () => {
     const endRef = useRef(null)
 
     useEffect(() => {
-        endRef.current?.scrollIntoView({ behavior: "smooth" });
+        endRef.current?.scrollIntoView({ behavior: "smooth", block: 'nearest' });
 
     }, [messages]);    
     
@@ -21,7 +21,7 @@ const ActiveChat = () => {
         <div className="active-chat-messages-container">
             {
                 messages.map((message, i)=>{
-                    return (<div key={message?.createdAt?.nanoseconds} className={`active-chat-message ${message.senderId===uid?'owner':''}`}>
+                    return (<div key={message?.createdAt?.seconds} className={`active-chat-message ${message.senderId===uid?'owner':''}`}>
                         <div className='active-chat-message-img'>
                             <img src={message.senderId === uid?profileImg:receiverProfileImg} alt="" />
                         </div>

@@ -13,7 +13,7 @@ const ActiveChatHeader = () => {
   const handleBlock = () =>{
     dispatch(toggleBlock())
   }
-
+  
   const handleBack = () =>{
     dispatch(clearCurrentChat())
   }
@@ -21,7 +21,7 @@ const ActiveChatHeader = () => {
   return (
     <div className="active-chat-header">
         <div className="active-chat-header-info">
-            <ArrowBackIcon onClick={handleBack}/>
+            <ArrowBackIcon onClick={handleBack} />
             <div>
               <img src={profileImg} alt={username} />
               <div>
@@ -35,6 +35,7 @@ const ActiveChatHeader = () => {
           <button 
             onClick={handleBlock}
             disabled={isCurrentUserBlocked}
+            title='Block'
           >
             <BlockIcon />
           </button>

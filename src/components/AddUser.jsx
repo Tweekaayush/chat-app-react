@@ -9,6 +9,7 @@ const AddUser = ({addUserStatus, setAddUserStatus}) => {
     const [userInput, setUserInput] = useState('')
     const dispatch = useDispatch()
     const {users: userList} = useSelector(state=>state.chats.data)
+    const ref= useRef('')
 
     const searchUsers = useCallback(() =>{
         if(!userInput){
@@ -22,6 +23,14 @@ const AddUser = ({addUserStatus, setAddUserStatus}) => {
         setUserInput('')
     }
 
+    const handleClickOutside = (e) =>{
+    
+        if(ref.current && !ref.current.contains(e.target)){
+            setAddUserStatus(false)
+            setUserInput('')
+        }
+    }
+
     useEffect(()=>{
 
         const timeout = setTimeout(searchUsers, 1000)
@@ -30,9 +39,15 @@ const AddUser = ({addUserStatus, setAddUserStatus}) => {
 
     }, [searchUsers])
 
+    useEffect(()=>{
+        window.addEventListener('click', handleClickOutside, true)
+
+        return ()=> window.removeEventListener('click', handleClickOutside, true)
+    }, [])
+
   return (
     <div className="pg-overlay" style={{display: `${addUserStatus?'flex':'none'}`}}>
-        <div className="add-user-container">
+        <div className="add-user-container" ref={ref}>
             <div className="quit-btn-container">
                 <CloseIcon onClick={()=>[setAddUserStatus(false), setUserInput('')]}/>
             </div>

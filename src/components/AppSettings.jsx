@@ -2,6 +2,7 @@ import React from 'react'
 import { themes } from '../datalist'
 import {useSelector, useDispatch} from 'react-redux'
 import { changeTheme } from '../features/themeSlice'
+import PaletteIcon from '@mui/icons-material/Palette';
 
 const AppSettings = () => {
 
@@ -12,8 +13,9 @@ const AppSettings = () => {
     <div className="app-setting-container">
         <div className="setting-content-header">
             <h2>
-                App Theme
+                Theme
             </h2>
+            <PaletteIcon/>
         </div>
         <ul className="app-setting-grid">
             {

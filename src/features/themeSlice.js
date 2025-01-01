@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
-    theme: 'carbon'
+    theme: localStorage.getItem('chat-app-theme') || 'carbon'
 }
 
 const themeSlice = createSlice({
@@ -10,6 +10,7 @@ const themeSlice = createSlice({
     reducers: {
         changeTheme: (state, action)=>{
             state.theme = action.payload
+            localStorage.setItem('chat-app-theme', action.payload)
         }
     }
 })

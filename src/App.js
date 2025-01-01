@@ -1,11 +1,12 @@
 import React, { lazy, useEffect, Suspense } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import { onAuthStateChanged, auth } from './config/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetails } from './features/userSlice';
 import Settings from './pages/Settings';
+import Header from './components/Header';
 const Login = lazy(()=>import('./pages/Login'));
 const Register = lazy(()=>import('./pages/Register'));
 const Chats = lazy(()=>import('./pages/Chats'));
@@ -40,16 +41,19 @@ const App = () => {
         <div className="body-bg-shape"></div>
         <div className="body-bg-shape"></div>
       </div>
-      <Suspense fallback={<>loading...</>}>
-        <Routes>
-          <Route exact path='/login' element={<Login/>}/>
-          <Route exact path='/register' element={<Register/>}/>
-          <Route element={<PrivateRoute/>}>
-            <Route exact path='/' element={<Chats/>}/> 
-            <Route exact path='/settings' element={<Settings/>}/> 
-          </Route>
-        </Routes>
-      </Suspense>
+      <Header/>
+      <div className="body-container">
+        <Suspense fallback={<>loading...</>}>
+          <Routes>
+            <Route exact path='/login' element={<Login/>}/>
+            <Route exact path='/register' element={<Register/>}/>
+            <Route element={<PrivateRoute/>}>
+              <Route exact path='/' element={<Chats/>}/> 
+              <Route exact path='/settings' element={<Settings/>}/> 
+            </Route>
+          </Routes>
+        </Suspense>
+      </div>
     </Router>
   ) 
 }

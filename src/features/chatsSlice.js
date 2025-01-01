@@ -201,9 +201,10 @@ export const toggleBlock = createAsyncThunk('toggleBlock', async(payload, {getSt
         await updateDoc(doc(db, 'users', uid), {
             blocked: isReceiverBlocked ? arrayRemove(receiverId) : arrayUnion(receiverId)
         })
-
+        return !isReceiverBlocked
     } catch (error) {
         console.log(error)
+        return error
     }
 })
 
@@ -231,12 +232,16 @@ const chatsSlice = createSlice({
                 chatList: [],
                 users: [],
                 messages: [],
-                currentChat: {}
+                currentChat: {},
+                isCurrentUserBlocked: false,
+                isReceiverBlocked: false
             }
         },
-        clearCurrentChat: (state, action)=>{
+        clearCurrentChat: (state)=>{
             state.data.currentChat = {}
             state.data.messages = []
+            state.data.isCurrentUserBlocked = false
+            state.data.isReceiverBlocked = false
         },
         clearUsers: (state)=>{
             state.data.users = []
@@ -251,6 +256,17 @@ const chatsSlice = createSlice({
             state.data.users = action.payload
         })
         builder.addCase(getUsers.rejected, (state, action)=>{
+            state.loading = false
+            state.error = action.payload
+        })
+        builder.addCase(toggleBlock.pending, (state)=>{
+            state.loading = true
+        })
+        builder.addCase(toggleBlock.fulfilled, (state, action)=>{
+            state.loading = false
+            state.data.isReceiverBlocked = action.payload
+        })
+        builder.addCase(toggleBlock.rejected, (state, action)=>{
             state.loading = false
             state.error = action.payload
         })

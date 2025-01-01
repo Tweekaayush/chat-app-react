@@ -42,26 +42,26 @@ const ChatsList = ({search}) => {
         dispatch(getChatList())
     }, [])
 
-    // useEffect(()=>{
-    //     setList(chatList)
-    // }, [chatList])
+    useEffect(()=>{
+        setList(chatList)
+    }, [chatList])
 
-    // useEffect(()=>{
-    //     if(search !== ''){
-    //         setList(chatList.filter((item)=>{
-    //             return item.username.toLowerCase().includes(search.toLowerCase())
-    //         }))
-    //     }else{
-    //         setList(chatList)
-    //     }
-    // }, [search])
+    useEffect(()=>{
+        if(search !== ''){
+            setList(chatList.filter((item)=>{
+                return item.username.toLowerCase().includes(search.toLowerCase())
+            }))
+        }else{
+            setList(chatList)
+        }
+    }, [search])
 
   return (
     <div className="chat-list-container">
         {
-            chatList?.length !== 0?(
-                chatList?.map((chat, i)=>{
-                return <div key={i} className='chat-list-item' onClick={()=>handleClick(chat)} style={{border: `${chat.isSeen?'':'4px solid indigo'}`}}>
+            list?.length !== 0?(
+                list?.map((chat, i)=>{
+                return <div key={i} className={`${chat.isSeen?'chat-list-item':'chat-list-item unseen'}`} onClick={()=>handleClick(chat)} >
                             <img src={chat.profileImg} alt={chat.username} />
                             <div>
                                 <h2>{chat.username}</h2>
