@@ -12,6 +12,7 @@ const ActiveChat = () => {
 
     useEffect(() => {
         endRef.current?.scrollIntoView({ behavior: "smooth" });
+
     }, [messages]);    
     
   return (

@@ -11,14 +11,15 @@ const Chats = () => {
 
     const [addUserStatus, setAddUserStatus] = useState(false)
     const {currentChat} = useSelector(state=>state.chats.data)
+    const [search, setSearch] = useState('')
 
   return (
     <div className="container">
         <AddUser addUserStatus={addUserStatus} setAddUserStatus={setAddUserStatus}/>
         <div className="container-left">
             <ChatListHeader />
-            <SearchUser setAddUserStatus={setAddUserStatus}/>
-            <ChatsList/>
+            <SearchUser setAddUserStatus={setAddUserStatus} search={search} setSearch={setSearch}/>
+            <ChatsList search={search} />
         </div>
         <div className="container-right">
             {

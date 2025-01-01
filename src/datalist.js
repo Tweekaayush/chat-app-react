@@ -104,3 +104,22 @@ export const profileImages = [
         image: 'https://i.pinimg.com/736x/37/e8/09/37e809f7e360110c1dcf1363c130773f.jpg'
     },
 ]
+
+export const themes = [
+    {
+        id: 1,
+        value: 'carbon'
+    },
+    {
+        id: 2,
+        value: 'midnight'
+    },
+    {
+        id: 3,
+        value: 'sunrise'
+    },
+    {
+        id: 4,
+        value: 'lavender'
+    },
+]

@@ -30,6 +30,7 @@ const ChatListHeader = () => {
   const logout = () =>{
     if(uid){
       signOut(auth).then(()=>{
+        window.location.reload()
         dispatch(signOutUser())
         dispatch(clearAllChatData())
       })

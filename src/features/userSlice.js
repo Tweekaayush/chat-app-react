@@ -9,6 +9,8 @@ const initialState = {
         username: '',
         profileImg: '',
         email: '',
+        status: '',
+        blocked: []
     },
     error: ''
 }
@@ -23,6 +25,7 @@ export const getUserDetails = createAsyncThunk('getUserDetails', async(payload, 
     }else{
         await setDoc(doc(collection(db, 'users'), payload.uid),{
             ...payload,
+            status: 'Hey there! I am using Chat App.',
             blocked: []
         })
         await setDoc(doc(collection(db, 'userChats'), payload.uid),{
@@ -32,10 +35,22 @@ export const getUserDetails = createAsyncThunk('getUserDetails', async(payload, 
 
     return {
         ...payload,
+        status: 'Hey there! I am using Chat App.',
         blocked: []
     }
 })
 
+export const updateUser = createAsyncThunk('updateUser', async(payload, {getState})=>{
+
+    const state = getState().user
+
+    await setDoc(doc(collection(db, 'users'), state.data.uid ),{
+        ...state.data,
+        ...payload
+    })
+
+    return payload
+})
 
 const userSlice = createSlice({
     name: 'user',
@@ -47,7 +62,8 @@ const userSlice = createSlice({
                 username: '',
                 profileImg: '',
                 email: '',
-                chats: []
+                status: '',
+                blocked: []
             }
         }
     },

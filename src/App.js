@@ -15,6 +15,7 @@ const App = () => {
 
   const dispatch = useDispatch()
   const {uid} = useSelector(state => state.user.data)
+  const {theme} = useSelector(state=>state.theme)
 
   useEffect(()=>{
     onAuthStateChanged(auth, async(user)=>{
@@ -29,8 +30,16 @@ const App = () => {
     }, [uid])
   }, [])
 
+  useEffect(()=>{
+    document.documentElement.setAttribute('data-theme', theme)
+  }, [theme])
+
   return (
     <Router>
+      <div className="body-background">
+        <div className="body-bg-shape"></div>
+        <div className="body-bg-shape"></div>
+      </div>
       <Suspense fallback={<>loading...</>}>
         <Routes>
           <Route exact path='/login' element={<Login/>}/>

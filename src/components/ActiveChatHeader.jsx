@@ -7,7 +7,7 @@ import BlockIcon from '@mui/icons-material/Block';
 
 const ActiveChatHeader = () => {
 
-  const {currentChat: {username, profileImg}, isCurrentUserBlocked, isReceiverBlocked} = useSelector(state=>state.chats.data)
+  const {currentChat: {username, profileImg, status}, isCurrentUserBlocked, isReceiverBlocked} = useSelector(state=>state.chats.data)
   const dispatch = useDispatch()
 
   const handleBlock = () =>{
@@ -24,7 +24,11 @@ const ActiveChatHeader = () => {
             <ArrowBackIcon onClick={handleBack}/>
             <div>
               <img src={profileImg} alt={username} />
-              <h2>{username}</h2>
+              <div>
+                <h2>{username}</h2>
+                <p>{status}</p>
+              </div>
+
             </div>
         </div>
         <div>

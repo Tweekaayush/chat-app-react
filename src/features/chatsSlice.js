@@ -15,6 +15,9 @@ const initialState = {
     }
 }
 
+export let unsubChat 
+export let unsubMessage
+
 export const addUser = createAsyncThunk('addUser', async(payload, {getState})=>{
 
     const userChatRef = collection(db, 'userChats')
@@ -28,7 +31,6 @@ export const addUser = createAsyncThunk('addUser', async(payload, {getState})=>{
             createdAt: serverTimestamp(),
             messages: []
         })
-        console.log(uid, payload, newChatRef.id)
         await updateDoc(doc(userChatRef, uid),{
             chats: arrayUnion({
                 chatId: newChatRef.id,
@@ -100,8 +102,9 @@ export const getUsers = createAsyncThunk('getUsers', async(payload, {getState})=
 export const getChatList = createAsyncThunk('getChatList', async(payload, {getState, dispatch})=>{
 
     const {uid} = getState().user.data
+
         try {
-            onSnapshot(doc(db, 'userChats', uid), async(docSnap)=>{                    
+            unsubChat = onSnapshot(doc(db, 'userChats', uid), async(docSnap)=>{                    
                 const items = docSnap.data().chats
                 const promises = items.map(async(item)=>{
                     const userDocSnap = await getDoc(doc(db, 'users', item.receiverId))
@@ -111,7 +114,7 @@ export const getChatList = createAsyncThunk('getChatList', async(payload, {getSt
                 const chatData = await Promise.all(promises)
                 
                 chatData.sort((a, b) => b.updatedAt - a.updatedAt)
-
+        
                 dispatch(setChatList(chatData))
             })
             
@@ -123,12 +126,13 @@ export const getChatList = createAsyncThunk('getChatList', async(payload, {getSt
 
 export const getMessages = createAsyncThunk('getMessages', async(payload, {dispatch})=>{
     try {
-        onSnapshot(doc(db, 'chats', payload.chatId), (res)=>{
+        unsubMessage = onSnapshot(doc(db, 'chats', payload.chatId), (res)=>{
             dispatch(setMessages({
                 currentChat: payload, 
                 messages: res.data().messages
             }))
         })  
+        // unsub()
     } catch (error) {
         console.log(error)
     }
@@ -156,6 +160,7 @@ export const sendMessages = createAsyncThunk('sendMessages', async(payload, {get
             const userChatsData = userChatSnapshot.data()
 
             const chatIndex = userChatsData.chats.findIndex(c=>c.chatId === chatId)
+
 
             userChatsData.chats[chatIndex].lastMessage = payload
             userChatsData.chats[chatIndex].isSeen = id===uid
