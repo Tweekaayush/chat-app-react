@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import db, { collection, doc, getDoc, setDoc } from "../config/firebase";
-import { getChatList } from "./chatsSlice";
 
 const initialState = {
     loading: false,

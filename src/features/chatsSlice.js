@@ -1,6 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import db, { collection, getDoc, getDocs, query, where, or, and, setDoc, doc, arrayUnion, updateDoc, serverTimestamp, onSnapshot, arrayRemove } from '../config/firebase'
-import { getUserDetails } from './userSlice'
 
 const initialState = {
     loading: false,

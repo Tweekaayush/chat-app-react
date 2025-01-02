@@ -51,6 +51,9 @@ const AddUser = ({addUserStatus, setAddUserStatus}) => {
             <div className="quit-btn-container">
                 <CloseIcon onClick={()=>[setAddUserStatus(false), setUserInput('')]}/>
             </div>
+            <h2>
+                Find users to chat.
+            </h2>
             <div className="add-user-input">
                 <input type="text" value={userInput} onChange={(e)=>setUserInput(e.target.value)} placeholder='Search users to add..'/>
                 {userInput && <CloseIcon onClick={()=>setUserInput('')}/>}

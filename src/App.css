@@ -749,9 +749,16 @@ header > a{
 }
 
 .quit-btn-container > svg{
-  color: var(--text-color-1);
+  color: var(--text-color-3);
   float: right;
-  font-size: 32px;
+  font-size: 24px;
+}
+
+.add-user-container > h2{
+  color: var(--text-color-1);
+  font-size: 18px;
+  margin-bottom: 8px;
+  text-align: center;
 }
 
 .add-user-input{
