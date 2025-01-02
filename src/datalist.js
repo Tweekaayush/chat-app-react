@@ -122,4 +122,12 @@ export const themes = [
         id: 4,
         value: 'lavender'
     },
+    {
+        id: 5,
+        value: 'vanilla'
+    },
+    {
+        id: 6,
+        value: 'coffee'
+    },
 ]

@@ -76,6 +76,10 @@ const Login = () => {
         }
     }, [uid])
 
+    useEffect(()=>{
+        document.title = 'ChatApp | Login'
+    }, [])
+
   return (
     <div className="form-container">
         <h1>Welcome!</h1>

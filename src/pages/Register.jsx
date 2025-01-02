@@ -104,6 +104,10 @@ const Register = () => {
       navigate('/')
   }, [uid])
 
+  useEffect(()=>{
+    document.title = 'ChatApp | Register'
+  }, [])
+
   return (
     <div className="form-container">
       <h1>Create an account</h1>

@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <header>
         <Link to={'/'}>
-            Brand
+            ChatApp
         </Link>
     </header>
   )

@@ -23,6 +23,7 @@ const Chats = () => {
 
     useEffect(()=>{
         window.addEventListener('resize', handleClickOutside)
+        document.title = 'ChatApp | Chats'
         return ()=>window.removeEventListener('resize', handleClickOutside)
       }, [])
     

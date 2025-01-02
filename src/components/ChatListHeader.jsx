@@ -67,11 +67,11 @@ const ChatListHeader = () => {
           ref={ref}
         >
           <li className="more-detail-options" onClick={()=>navigate('/settings')}>
-            <span>settings</span>
+            <span>Settings</span>
             <SettingsIcon />
           </li>
           <li className="more-detail-options" onClick={logout}>
-            <span>logout</span>
+            <span>Logout</span>
             <LogoutIcon />
           </li>
         </ul>
