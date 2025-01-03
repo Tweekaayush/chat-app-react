@@ -7,7 +7,7 @@ import BlockIcon from '@mui/icons-material/Block';
 
 const ActiveChatHeader = () => {
 
-  const {currentChat: {username, profileImg, status, groupName, groupImg, groupStatus}, isCurrentUserBlocked, isReceiverBlocked, currentChat} = useSelector(state=>state.chats.data)
+  const {currentChat: {username, profileImg, status, groupName, groupImg, groupStatus}, isCurrentUserBlocked, currentChat} = useSelector(state=>state.chats.data)
   const dispatch = useDispatch()
 
   const handleBlock = () =>{

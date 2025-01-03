@@ -1,11 +1,9 @@
-import React, { useCallback, useState } from 'react'
-import AttachFileIcon from '@mui/icons-material/AttachFile';
+import React, { useState } from 'react'
 import SendIcon from '@mui/icons-material/Send';
 import {useDispatch, useSelector} from 'react-redux'
 import { sendGroupMessages, sendMessages } from '../features/chatsSlice';
 import EmojiPicker from 'emoji-picker-react'
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
-import { useEffect } from 'react';
 
 const ActiveChatInput = () => {
 

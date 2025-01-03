@@ -70,32 +70,36 @@ const ChatsList = ({search, setOpen}) => {
     }, [])
 
     useEffect(()=>{
+        setList([...list.sort((a,b)=>b.updatedAt - a.updatedAt)])
+    }, [list])
+
+    useEffect(()=>{
         setList([...chatList, ...groupList])
     }, [chatList, groupList])
 
 
     useEffect(()=>{
         if(search !== ''){
-            setList([chatList.filter((item)=>{
+            setList([...chatList.filter((item)=>{
                     return item.username.toLowerCase().includes(search.toLowerCase())
                 }),
-                groupList.filter((item)=>{
+                ...groupList.filter((item)=>{
                     return item.groupName.toLowerCase().includes(search.toLowerCase())
                 })
             ])
         }else{
             setList([...chatList, ...groupList])
         }
-    }, [search])
+    }, [search, chatList, groupList])
 
 
   return (
     <div className="chat-list-container">
         {
             list?.length !== 0?(
-                list?.map((chat, i)=>{
+                list?.map((chat)=>{
                 return chat?.admin === undefined?( 
-                        <div key={i} className={`${chat.isSeen?'chat-list-item':'chat-list-item unseen'}`} onClick={()=>handleClick(chat)}>
+                        <div key={chat.chatId} className={`${chat.isSeen?'chat-list-item':'chat-list-item unseen'}`} onClick={()=>handleClick(chat)}>
                             <img src={chat.profileImg} alt={chat.username} className='profile-avatar' />
                             <div>
                                 <h2>{chat.username}</h2>
@@ -112,7 +116,7 @@ const ChatsList = ({search, setOpen}) => {
                             </div>
                         </div>
                     ):(
-                        <div key={i} className={`${chat.isSeen?'chat-list-item':'chat-list-item unseen'}`} onClick={()=>handleGroupClick(chat)}>
+                        <div key={chat.chatId} className={`${chat.isSeen?'chat-list-item':'chat-list-item unseen'}`} onClick={()=>handleGroupClick(chat)}>
                             <img src={chat.groupImg} alt={chat.groupName} className='profile-avatar' />
                             <div>
                                 <h2>{chat.groupName}</h2>

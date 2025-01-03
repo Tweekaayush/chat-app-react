@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 import {useDispatch, useSelector} from 'react-redux'
-import { getUsers, clearUsers, addUser, addGroupChat } from '../features/chatsSlice';
+import { getUsers, clearUsers, addGroupChat } from '../features/chatsSlice';
 
 
 const AddGroup = ({addGroupStatus, setAddGroupStatus}) => {
@@ -83,7 +83,7 @@ const AddGroup = ({addGroupStatus, setAddGroupStatus}) => {
                 })
                 return flag
             }))
-        }, [userList])
+        }, [userList, members, uid])
     
 
     useEffect(()=>{

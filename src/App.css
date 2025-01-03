@@ -420,7 +420,7 @@ header > a{
 .add-buttons{
   display: flex;
   padding: 16px;
-  gap: 5px;
+  gap: 10px;
   justify-content: flex-end;
 }
 
@@ -432,8 +432,9 @@ header > a{
     align-items: center;
     background-image: var(--button-color-1);
     color: var(--text-color-1);
-    border-radius: 50%;
+    border-radius: 5px;
     cursor: pointer;
+    box-shadow: 2px 2px 5px var(--button-shadow);
 }
 
 .add-user-btn span, .add-user-btn > span > svg{
@@ -495,6 +496,7 @@ header > a{
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
+  line-clamp: 1;
   -webkit-line-clamp: 1; 
   -webkit-box-orient: vertical;
   max-width: 125px;
@@ -792,6 +794,10 @@ header > a{
   padding: 16px;
   border-radius: 10px;
   width: 300px;
+}
+
+.add-group-container{
+  width: 350px;
 }
 
 .quit-btn-container{

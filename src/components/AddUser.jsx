@@ -52,7 +52,7 @@ const AddUser = ({addUserStatus, setAddUserStatus}) => {
             })
             return flag
         }))
-    }, [userList])
+    }, [userList, uid, chatList])
 
     useEffect(()=>{
         window.addEventListener('click', handleClickOutside, true)

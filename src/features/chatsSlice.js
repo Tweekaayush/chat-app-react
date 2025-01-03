@@ -135,7 +135,6 @@ export const getChatList = createAsyncThunk('getChatList', async(payload, {getSt
                 
                 const chatData = await Promise.all(promises)
                 
-                chatData.sort((a, b) => b.updatedAt - a.updatedAt)
         
                 dispatch(setChatList(chatData))
             })
@@ -152,8 +151,6 @@ export const getGroupList = createAsyncThunk('getGroupList', async(payload, {get
         try {
             onSnapshot(doc(db, 'groupChats', uid), async(docSnap)=>{                    
                 const items = docSnap.data().chats
-            
-                items.sort((a, b) => b.updatedAt - a.updatedAt)
                 
                 dispatch(setGroupList(items))
             })
