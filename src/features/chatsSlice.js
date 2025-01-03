@@ -6,6 +6,7 @@ const initialState = {
     error: '',
     data: {
         chatList: [],
+        groupList: [],
         users: [],
         messages: [],
         currentChat: {},
@@ -55,11 +56,43 @@ export const addUser = createAsyncThunk('addUser', async(payload, {getState})=>{
 
 })
 
+
+export const addGroupChat = createAsyncThunk('addGroupChat', async(payload, {getState})=>{
+
+    const userGroupRef = collection(db, 'groupChats')
+    const chatRef = collection(db, 'chats')
+
+    try {
+        const newChatRef = doc(chatRef)    
+
+        await setDoc(newChatRef,{
+            createdAt: serverTimestamp(),
+            messages: []
+        })
+
+        payload.members.forEach(async(member)=>{
+            await updateDoc(doc(userGroupRef, member.uid),{
+                chats: arrayUnion({
+                    chatId: newChatRef.id,
+                    lastMessage: '',
+                    members: payload.members.filter((m)=>member.uid!==m.uid),
+                    updatedAt: Date.now(), 
+                    groupName: payload.groupName,
+                    groupImg: payload.groupImg,
+                    admin: payload.admin
+                })
+            })
+        })
+
+    } catch (error) {
+        console.log(error) 
+    }
+
+})
+
 export const getUsers = createAsyncThunk('getUsers', async(payload, {getState})=>{
 
     try {
-        const {uid} = getState().user.data
-        const {chatList} = getState().chats.data
         const querySnapshot = await getDocs(query(collection(db, 'users'), or(
             and(
               where('username', '>=', payload),
@@ -77,18 +110,8 @@ export const getUsers = createAsyncThunk('getUsers', async(payload, {getState})=
 
         if(!querySnapshot.empty){
             const userList = querySnapshot.docs.map((doc)=> doc.data())
-            const filteredList = userList.filter((user)=>user.uid !== uid).filter((user)=>{
-                let flag = true
-                chatList.forEach((chat) => {
-                    if(chat.receiverId === user.uid){
-                        flag = false
-                        return
-                    }
-                })
-                return flag
-            })
 
-            return filteredList
+            return userList
         }
 
     } catch (error) {
@@ -122,6 +145,24 @@ export const getChatList = createAsyncThunk('getChatList', async(payload, {getSt
         }       
 })
 
+export const getGroupList = createAsyncThunk('getGroupList', async(payload, {getState, dispatch})=>{
+
+    const {uid} = getState().user.data
+
+        try {
+            onSnapshot(doc(db, 'groupChats', uid), async(docSnap)=>{                    
+                const items = docSnap.data().chats
+            
+                items.sort((a, b) => b.updatedAt - a.updatedAt)
+                
+                dispatch(setGroupList(items))
+            })
+            
+        } catch (error) {
+            console.log(error)
+        }       
+})
+
 
 export const getMessages = createAsyncThunk('getMessages', async(payload, {dispatch})=>{
     try {
@@ -131,7 +172,6 @@ export const getMessages = createAsyncThunk('getMessages', async(payload, {dispa
                 messages: res.data().messages
             }))
         })  
-        // unsub()
     } catch (error) {
         console.log(error)
     }
@@ -176,11 +216,67 @@ export const sendMessages = createAsyncThunk('sendMessages', async(payload, {get
   }
 })
 
+export const sendGroupMessages = createAsyncThunk('sendGroupMessages', async(payload, {getState})=>{
+    try {
+
+        const {uid, profileImg, username} = getState().user.data
+        const {currentChat: {chatId, members}} = getState().chats.data
+
+        await updateDoc(doc(db, 'chats', chatId),{
+            messages: arrayUnion({
+                senderId: uid,
+                text: payload, 
+                username: username,
+                profileImg: profileImg,
+                createdAt: new Date()
+            })
+        })
+
+        const userIds = [uid, ...members.map((m)=>m.uid)]
+
+        userIds.forEach(async(id)=>{
+            const userChatSnapshot = await getDoc(doc(db, 'groupChats', id))
+
+            const userChatsData = userChatSnapshot.data()
+
+            const chatIndex = userChatsData.chats.findIndex(c=>c.chatId === chatId)
+
+
+            userChatsData.chats[chatIndex].lastMessage = payload
+            userChatsData.chats[chatIndex].isSeen = id===uid
+            userChatsData.chats[chatIndex].updatedAt = Date.now();
+
+            await updateDoc(doc(db, 'groupChats', id), {
+                chats: userChatsData.chats,
+            });
+        })
+
+
+    } catch (error) {
+        console.log(error)
+  }
+})
+
 export const updateChatList = createAsyncThunk('updateChatList', async(payload, {getState})=>{
 
     const {uid} = getState().user.data
 
     const userChatsRef = doc(db, "userChats", uid);
+        
+    try {
+      await updateDoc(userChatsRef, {
+        chats: payload,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+})
+
+export const updateGroupList = createAsyncThunk('updateGroupList', async(payload, {getState})=>{
+
+    const {uid} = getState().user.data
+
+    const userChatsRef = doc(db, "groupChats", uid);
         
     try {
       await updateDoc(userChatsRef, {
@@ -225,6 +321,9 @@ const chatsSlice = createSlice({
         },
         setChatList: (state, action)=>{
             state.data.chatList = action.payload
+        },
+        setGroupList: (state, action)=>{
+            state.data.groupList = action.payload
         },
         clearAllChatData: (state)=>{
             state.data = {
@@ -272,6 +371,6 @@ const chatsSlice = createSlice({
     }
 })
 
-export const {checkBlocked, setMessages, setChatList, clearUsers, clearAllChatData, clearCurrentChat} = chatsSlice.actions
+export const {setGroupList, checkBlocked, setMessages, setChatList, clearUsers, clearAllChatData, clearCurrentChat} = chatsSlice.actions
 
 export default chatsSlice.reducer

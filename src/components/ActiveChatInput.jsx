@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import SendIcon from '@mui/icons-material/Send';
 import {useDispatch, useSelector} from 'react-redux'
-import { sendMessages } from '../features/chatsSlice';
+import { sendGroupMessages, sendMessages } from '../features/chatsSlice';
 import EmojiPicker from 'emoji-picker-react'
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import { useEffect } from 'react';
@@ -11,7 +11,7 @@ const ActiveChatInput = () => {
 
   const [text, setText] = useState('')
   const dispatch = useDispatch()
-  const {isCurrentUserBlocked, isReceiverBlocked} = useSelector(state=>state.chats.data)
+  const {isCurrentUserBlocked, isReceiverBlocked, currentChat} = useSelector(state=>state.chats.data)
   const [open, setOpen] = useState(false)
 
   const handleEmoji = (e) =>{
@@ -28,7 +28,8 @@ const ActiveChatInput = () => {
 
     if(text === '') return;
 
-    dispatch(sendMessages(text))
+    if(currentChat?.admin !== undefined) dispatch(sendGroupMessages(text))
+    else dispatch(sendMessages(text))
 
     setText("")
   }

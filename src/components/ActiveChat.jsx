@@ -6,7 +6,7 @@ import {format} from 'timeago.js'
 
 const ActiveChat = () => {
 
-    const {messages, currentChat: {profileImg: receiverProfileImg}} = useSelector(state=>state.chats.data)
+    const {messages, currentChat: {profileImg: receiverProfileImg}, currentChat} = useSelector(state=>state.chats.data)
     const {uid, profileImg} = useSelector(state=>state.user.data)
     const endRef = useRef(null)
 
@@ -18,22 +18,51 @@ const ActiveChat = () => {
   return (
     <div className="active-chat-container">
         <ActiveChatHeader />
-        <div className="active-chat-messages-container">
-            {
-                messages.map((message, i)=>{
-                    return (<div key={message?.createdAt?.seconds} className={`active-chat-message ${message.senderId===uid?'owner':''}`}>
-                        <div className='active-chat-message-img'>
-                            <img src={message.senderId === uid?profileImg:receiverProfileImg} alt="" className='profile-avatar'/>
-                        </div>
-                        <div className='active-chat-message-info'>
-                            <p>{message.text}</p>
-                            <p>{format(message.createdAt.toDate())}</p>
-                        </div>
-                    </div>)
-                })
-            }
-            <div ref={endRef}></div>
-        </div>
+        {
+            currentChat?.admin === undefined?(
+                <div className="active-chat-messages-container">
+                    {
+                        messages.map((message, i)=>{
+                            return (<div key={message?.createdAt?.seconds} className={`active-chat-message ${message?.senderId===uid?'owner':''}`}>
+                                <div className='active-chat-message-img'>
+                                    <img src={message?.senderId === uid?profileImg:receiverProfileImg} alt={message.senderId} className='profile-avatar'/>
+                                </div>
+                                <div className='active-chat-message-info'>
+                                    <p>{message?.text}</p>
+                                    <p>{format(message?.createdAt.toDate())}</p>
+                                </div>
+                            </div>)
+                        })
+                    }
+                    <div ref={endRef}></div>
+                </div>       
+            ): (
+                <div className="active-chat-messages-container">
+                    {
+                        messages.map((message, i)=>{
+                            return (
+                            <div key={message?.createdAt?.seconds} className={`active-chat-message ${message.senderId===uid?'owner':''}`}>
+                                <div className='active-chat-message-img'>
+                                    <img src={message?.profileImg} alt="" className='profile-avatar'/>
+                                </div>
+                                <div className='active-chat-message-info'>
+                                    <p>
+                                        <span>
+                                            {message?.username.split(' ')[0]}
+                                        </span>
+                                        <br/>
+                                        {message?.text}
+                                       
+                                    </p>
+                                    <p>{format(message?.createdAt.toDate())}</p>
+                                </div>
+                            </div>)
+                        })
+                    }
+                    <div ref={endRef}></div>
+                </div>    
+            )
+        }
         <ActiveChatInput/>
     </div>
   )

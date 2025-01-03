@@ -8,7 +8,9 @@ const AddUser = ({addUserStatus, setAddUserStatus}) => {
 
     const [userInput, setUserInput] = useState('')
     const dispatch = useDispatch()
-    const {users: userList} = useSelector(state=>state.chats.data)
+    const {users: userList, chatList} = useSelector(state=>state.chats.data)
+    const {uid} = useSelector(state=>state.user.data)
+    const [filteredUsers, setFilteredUsers] = useState([])
     const ref= useRef('')
 
     const searchUsers = useCallback(() =>{
@@ -40,13 +42,26 @@ const AddUser = ({addUserStatus, setAddUserStatus}) => {
     }, [searchUsers])
 
     useEffect(()=>{
+        setFilteredUsers(userList.filter((user)=>user.uid !== uid).filter((user)=>{
+            let flag = true
+            chatList.forEach((chat) => {
+                if(chat.receiverId === user.uid){
+                    flag = false
+                    return
+                }
+            })
+            return flag
+        }))
+    }, [userList])
+
+    useEffect(()=>{
         window.addEventListener('click', handleClickOutside, true)
 
         return ()=> window.removeEventListener('click', handleClickOutside, true)
     }, [])
 
   return (
-    <div className="pg-overlay" style={{display: `${addUserStatus?'flex':'none'}`}}>
+    <div className="add-overlay" style={{display: `${addUserStatus?'flex':'none'}`}}>
         <div className="add-user-container" ref={ref}>
             <div className="quit-btn-container">
                 <CloseIcon onClick={()=>[setAddUserStatus(false), setUserInput('')]}/>
@@ -60,8 +75,8 @@ const AddUser = ({addUserStatus, setAddUserStatus}) => {
             </div>
             <div className="add-user-search-results">
                 {
-                    userList.length?(
-                        userList.map((user)=>{
+                    filteredUsers.length?(
+                        filteredUsers.map((user)=>{
                             return <div className='add-user-item' key={user.uid}>
                                         <div className="add-user-item-left">
                                             <img src={user.profileImg} alt={user.username} />

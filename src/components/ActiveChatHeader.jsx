@@ -7,7 +7,7 @@ import BlockIcon from '@mui/icons-material/Block';
 
 const ActiveChatHeader = () => {
 
-  const {currentChat: {username, profileImg, status}, isCurrentUserBlocked, isReceiverBlocked} = useSelector(state=>state.chats.data)
+  const {currentChat: {username, profileImg, status, groupName, groupImg, groupStatus}, isCurrentUserBlocked, isReceiverBlocked, currentChat} = useSelector(state=>state.chats.data)
   const dispatch = useDispatch()
 
   const handleBlock = () =>{
@@ -20,26 +20,48 @@ const ActiveChatHeader = () => {
 
   return (
     <div className="active-chat-header">
-        <div className="active-chat-header-info">
-            <ArrowBackIcon onClick={handleBack} />
-            <div>
-              <img src={profileImg} alt={username} className='profile-avatar'/>
-              <div>
-                <h2>{username}</h2>
-                <p>{status}</p>
-              </div>
+      {
+        currentChat?.admin === undefined?(
+            <>
+              <div className="active-chat-header-info">
+                <ArrowBackIcon onClick={handleBack} />
+                <div>
+                  <img src={profileImg} alt={username} className='profile-avatar'/>
+                  <div>
+                    <h2>{username}</h2>
+                    <p>{status}</p>
+                  </div>
 
-            </div>
-        </div>
-        <div>
-          <button 
-            onClick={handleBlock}
-            disabled={isCurrentUserBlocked}
-            title='Block'
-          >
-            <BlockIcon />
-          </button>
-        </div>
+              </div>
+              </div>
+              <div>
+                <button 
+                  onClick={handleBlock}
+                  disabled={isCurrentUserBlocked}
+                  title='Block'
+                >
+                  <BlockIcon />
+                </button>
+              </div>
+              
+            </>
+          ):(
+            <>
+              <div className="active-chat-header-info">
+                <ArrowBackIcon onClick={handleBack} />
+                <div>
+                  <img src={groupImg} alt={groupName} className='profile-avatar'/>
+                  <div>
+                    <h2>{groupName}</h2>
+                    <p>{groupStatus}</p>
+                  </div>
+
+              </div>
+              </div>
+            </>
+          )
+      }
+        
     </div>
   )
 }

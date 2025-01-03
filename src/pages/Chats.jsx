@@ -7,10 +7,13 @@ import AddUser from '../components/AddUser'
 import {useSelector} from 'react-redux'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useRef } from 'react'
+import GroupsIcon2 from '@mui/icons-material/Groups';
+import AddGroup from '../components/AddGroup'
 
 const Chats = () => {
 
     const [addUserStatus, setAddUserStatus] = useState(false)
+    const [addGroupStatus, setAddGroupStatus] = useState(false)
     const {currentChat} = useSelector(state=>state.chats.data)
     const [search, setSearch] = useState('')
     const [open, setOpen] = useState(true)
@@ -30,7 +33,9 @@ const Chats = () => {
 
   return (
     <div className="container">
+        <div className="pg-overlay" style={{display: addUserStatus||addGroupStatus?'block':'none'}}></div>
         <AddUser addUserStatus={addUserStatus} setAddUserStatus={setAddUserStatus}/>
+        <AddGroup addGroupStatus={addGroupStatus} setAddGroupStatus={setAddGroupStatus}/>
         <div className={`container-left ${open?'left-container-show':''}`} ref={ref}>
             <ChatListHeader />
             <SearchUser setAddUserStatus={setAddUserStatus} search={search} setSearch={setSearch}/>
@@ -38,6 +43,16 @@ const Chats = () => {
             <button onClick={()=>setOpen(!open)}>
                 <ChevronRightIcon style={{transform: `${open?'rotate(180deg)':''}`}}/>
             </button>
+            <div className="add-buttons">
+                <div className="add-user-btn" onClick={()=>setAddUserStatus(true)}>
+                    <span>+</span>
+                </div>
+                <div className="add-user-btn" onClick={()=>setAddGroupStatus(true)}>
+                    <span>
+                        <GroupsIcon2/>
+                    </span>
+                </div>
+            </div>
         </div>
         <div className="container-right">
             {
