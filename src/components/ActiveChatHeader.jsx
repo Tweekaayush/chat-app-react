@@ -7,7 +7,7 @@ import BlockIcon from '@mui/icons-material/Block';
 
 const ActiveChatHeader = ({setChatInfo}) => {
 
-  const {currentChat: {username, profileImg, status, groupName, groupImg, groupStatus}, isCurrentUserBlocked, currentChat} = useSelector(state=>state.chats.data)
+  const {currentChat: {username, profileImg, status, groupName, groupImg}, isCurrentUserBlocked, currentChat} = useSelector(state=>state.chats.data)
   const dispatch = useDispatch()
 
   const handleBlock = () =>{
@@ -52,7 +52,7 @@ const ActiveChatHeader = ({setChatInfo}) => {
                   <img src={groupImg} alt={groupName} className='profile-avatar'onClick={()=>setChatInfo(true)}/>
                   <div onClick={()=>setChatInfo(true)}>
                     <h2>{groupName}</h2>
-                    <p>{groupStatus}</p>
+                    <p>Tap to see group info!</p>
                   </div>
 
               </div>

@@ -1,6 +1,6 @@
 import React, { lazy, useEffect, Suspense } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import { onAuthStateChanged, auth } from './config/firebase';
 import { useDispatch, useSelector } from 'react-redux';

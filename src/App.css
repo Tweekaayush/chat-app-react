@@ -27,6 +27,9 @@
   --text-color-5: rgb(151, 151, 151);
   --button-color-1: linear-gradient(90deg, var(--bg-color-4) 45%, var(--bg-color-5) 100%);
   --button-shadow: var(--bg-color-2);
+  --red-color: #f81818;
+  --red-color-disabled: #fa4646;
+  --white-color: #fff;
 }
 
 [data-theme='lavender']{
@@ -43,6 +46,9 @@
   --text-color-5: rgb(185, 185, 185);
   --button-color-1: linear-gradient(90deg, var(--bg-color-4) 45%, var(--bg-color-5) 100%);
   --button-shadow: var(--bg-color-2);
+  --red-color: #f81818;
+  --red-color-disabled: #fa4646;
+  --white-color: #fff;
 }
 
 [data-theme='sunrise']{
@@ -59,6 +65,9 @@
   --text-color-5: rgb(73, 73, 73);
   --button-color-1: linear-gradient(90deg, var(--bg-color-4) 45%, var(--bg-color-5) 100%);
   --button-shadow: var(--bg-color-2);
+  --red-color: #f81818;
+  --red-color-disabled: #fa4646;
+  --white-color: #fff;
 }
 
 [data-theme='midnight']{
@@ -75,6 +84,9 @@
   --text-color-5: rgb(151, 151, 151);
   --button-color-1: linear-gradient(90deg, var(--bg-color-4) 45%, var(--bg-color-5) 100%);
   --button-shadow: var(--bg-color-2);
+  --red-color: #f81818;
+  --red-color-disabled: #fa4646;
+  --white-color: #fff;
 }
 
 [data-theme='coffee']{
@@ -91,6 +103,9 @@
   --text-color-5: rgb(202, 202, 202);
   --button-color-1: linear-gradient(90deg, var(--bg-color-4) 45%, var(--bg-color-5) 100%);
   --button-shadow: var(--bg-color-2);
+  --red-color: #f81818;
+  --red-color-disabled: #fa4646;
+  --white-color: #fff;
 }
 
 [data-theme='vanilla']{
@@ -107,6 +122,9 @@
   --text-color-5: rgb(73, 73, 73);
   --button-color-1: linear-gradient(90deg, var(--bg-color-4) 45%, var(--bg-color-5) 100%);
   --button-shadow: var(--bg-color-2);
+  --red-color: #f81818;
+  --red-color-disabled: #fa4646;
+  --white-color: #fff;
 }
 
 body{
@@ -114,6 +132,11 @@ body{
   height: 100vh;
   position: relative;
   overflow: hidden;
+}
+
+.stop-resize-animation * {
+  transition: none !important;
+  animation: none !important;
 }
 
 #root{
@@ -178,7 +201,7 @@ header{
 }
 
 header > a{
-  color: #fff;
+  color: var(--white-color);
   font-weight: bold;
   text-decoration: none;
   font-size: 40px;
@@ -614,7 +637,7 @@ header > a{
 }
 
 .active-chat-header > div:last-of-type > button{
-  color: red;
+  color: var(--red-color);
   cursor: pointer;
   border: none;
   border-radius: 50%;
@@ -625,7 +648,7 @@ header > a{
 
 .active-chat-header > div:last-of-type > button:disabled{
   cursor:not-allowed;
-  color: rgb(255, 110, 110);
+  color: var(--red-color-disabled);
 }
 
 /* ------------------- Active Chat Messages ------------------- */
@@ -1236,6 +1259,7 @@ header > a{
   font-size: 16px;
   color: var(--text-color-3);
   margin-top: 6px;
+  text-align: center;
 }
 
 .current-chat-middle{
@@ -1246,9 +1270,9 @@ header > a{
 }
 
 .current-chat-middle > h1{
-  font-size: 24px;
+  font-size: 20px;
   margin-bottom: 16px;
-  color: var(--text-color-1);
+  color: var(--text-color-2);
 }
 
 .current-chat-list{
@@ -1263,8 +1287,8 @@ header > a{
 }
 
 .current-chat-bottom > button{
-  background-color: red;
-  color: var(--text-color-1);
+  background-color: var(--red-color);
+  color: var(--white-color);
   border: none;
   width: 100%;
   font-size: 18px;
@@ -1275,6 +1299,7 @@ header > a{
 
 .current-chat-bottom > button:disabled{
   cursor:not-allowed;
+  background-color: var(--red-color-disabled);
 }
 
 .member-list-item{
@@ -1445,8 +1470,11 @@ header > a{
     width: 60px;
   }
 
-  .current-chat-middle > h1, .current-chat-upper-info > h1{
+  .current-chat-upper-info > h1{
     font-size: 20px;
+  }
+  .current-chat-middle > h1{
+    font-size: 16px;
   }
 
   .current-chat-upper-info > p{

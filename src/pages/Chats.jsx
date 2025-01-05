@@ -20,10 +20,14 @@ const Chats = () => {
     const [chatInfo, setChatInfo] = useState(false)
     const ref = useRef(null)
 
-    const handleClickOutside = () =>{
-        if(window.innerWidth >= 768)
-            setOpen(true)
-    }
+    const handleResize = () =>{
+        let resizeTimer
+        document.body.classList.add("stop-resize-animation");
+        if(resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          document.body.classList.remove("stop-resize-animation");
+        }, 400);
+      }
 
     useEffect(()=>{
         if(Object.keys(currentChat).length !== 0) {
@@ -34,9 +38,10 @@ const Chats = () => {
     }, [currentChat])
 
     useEffect(()=>{
-        window.addEventListener('resize', handleClickOutside)
-        document.title = 'ChatApp | Chats'
-        return ()=>window.removeEventListener('resize', handleClickOutside)
+        document.title = 'ChatApp | Chats'    
+        window.addEventListener('resize', handleResize)
+        
+        return () => window.removeEventListener('resize', handleResize)
       }, [])
 
   return (
