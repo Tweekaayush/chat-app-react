@@ -5,7 +5,7 @@ import {useDispatch} from 'react-redux'
 import { clearCurrentChat, toggleBlock } from '../features/chatsSlice';
 import BlockIcon from '@mui/icons-material/Block';
 
-const ActiveChatHeader = () => {
+const ActiveChatHeader = ({setOpen}) => {
 
   const {currentChat: {username, profileImg, status, groupName, groupImg, groupStatus}, isCurrentUserBlocked, currentChat} = useSelector(state=>state.chats.data)
   const dispatch = useDispatch()
@@ -16,6 +16,7 @@ const ActiveChatHeader = () => {
   
   const handleBack = () =>{
     dispatch(clearCurrentChat())
+    setOpen(true)
   }
 
   return (

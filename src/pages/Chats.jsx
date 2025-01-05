@@ -40,9 +40,6 @@ const Chats = () => {
             <ChatListHeader />
             <SearchUser setAddUserStatus={setAddUserStatus} search={search} setSearch={setSearch}/>
             <ChatsList search={search} setOpen={setOpen} />
-            <button onClick={()=>setOpen(!open)}>
-                <ChevronRightIcon style={{transform: `${open?'rotate(180deg)':''}`}}/>
-            </button>
             <div className="add-buttons">
                 <div className="add-user-btn" onClick={()=>setAddUserStatus(true)}>
                     <span>+</span>
@@ -57,7 +54,7 @@ const Chats = () => {
         <div className="container-right">
             {
                 Object.keys(currentChat).length !== 0?(
-                    <ActiveChat/>
+                    <ActiveChat setOpen={setOpen}/>
                 ): (
                     <div className='empty-chat-container'>
                         <h1>Select a chat to start a conversation.</h1>
