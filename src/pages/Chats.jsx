@@ -5,7 +5,6 @@ import SearchUser from '../components/SearchUser'
 import ActiveChat from '../components/ActiveChat'
 import AddUser from '../components/AddUser'
 import {useSelector} from 'react-redux'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useRef } from 'react'
 import GroupsIcon2 from '@mui/icons-material/Groups';
 import AddGroup from '../components/AddGroup'

@@ -5,7 +5,7 @@ import { format } from 'timeago.js'
 
 const ChatsList = ({search, setOpen}) => {
 
-    const {chatList, groupList} = useSelector(state=>state.chats.data)
+    const {chatList, groupList, currentChat} = useSelector(state=>state.chats.data)
     const {uid, blocked} = useSelector(state=>state.user.data)
     const dispatch = useDispatch()
     const [list, setList] = useState([])
@@ -36,6 +36,8 @@ const ChatsList = ({search, setOpen}) => {
     const handleClick = (chat) =>{
 
         setOpen(false)
+
+        if(chat.chatId === currentChat.chatId) return
 
         dispatch(getMessages(chat))
         
@@ -69,12 +71,9 @@ const ChatsList = ({search, setOpen}) => {
         dispatch(getGroupList())
     }, [])
 
-    useEffect(()=>{
-        setList([...list.sort((a,b)=>b.updatedAt - a.updatedAt)])
-    }, [list])
 
     useEffect(()=>{
-        setList([...chatList, ...groupList])
+        setList([...chatList, ...groupList].sort((a,b)=> b.updatedAt - a.updatedAt))
     }, [chatList, groupList])
 
 
@@ -86,11 +85,11 @@ const ChatsList = ({search, setOpen}) => {
                 ...groupList.filter((item)=>{
                     return item.groupName.toLowerCase().includes(search.toLowerCase())
                 })
-            ])
+            ].sort((a,b)=> b.updatedAt - a.updatedAt))
         }else{
-            setList([...chatList, ...groupList])
+            setList([...chatList, ...groupList].sort((a,b)=> b.updatedAt - a.updatedAt))
         }
-    }, [search, chatList, groupList])
+    }, [search, groupList, chatList])
 
 
   return (
