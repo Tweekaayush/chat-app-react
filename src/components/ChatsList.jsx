@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import { checkBlocked, getChatList, getCommonGroups, getGroupList, getMessages, updateChatList, updateGroupList } from '../features/chatsSlice'
+import { checkBlocked, clearBlocked, getChatList, getCommonGroups, getGroupList, getMessages, updateChatList, updateGroupList } from '../features/chatsSlice'
 import { format } from 'timeago.js'
 
 const ChatsList = ({search}) => {
@@ -13,6 +13,7 @@ const ChatsList = ({search}) => {
     const handleGroupClick = (group) =>{
 
         dispatch(getMessages(group))
+        dispatch(clearBlocked())
         const chatIndex = chatList.findIndex(
             (item) => item.chatId === group.chatId
         );

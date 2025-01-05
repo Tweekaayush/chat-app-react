@@ -142,6 +142,8 @@ body{
 #root{
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
@@ -186,15 +188,18 @@ input::placeholder{
 
 .body-container{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
+  padding-inline: 16px;
   overflow: hidden;
 }
 
 /* ------------------- Form and Register Page ------------------- */
 
 header{
+  position: relative;
   width: 100%;
   height: 60px;
   padding: 32px;
@@ -293,8 +298,8 @@ header > a{
   display: flex;
   position: relative;
   border-radius: 10px;
-  overflow: hidden;
   margin: 16px;
+  overflow: hidden;
 }
 
 .container-left{
@@ -1295,6 +1300,7 @@ header > a{
   text-transform: capitalize;
   padding: 8px 16px;
   cursor: pointer;
+  font-weight: 700;
 }
 
 .current-chat-bottom > button:disabled{
@@ -1329,6 +1335,20 @@ header > a{
 .member-list-item > div > h2{
   font-size: 16px;
   color: var(--text-color-1);
+}
+
+/* ------------------- Footer ------------------- */
+
+footer{
+  width: 100%;
+  padding: 8px;
+  color: rgb(226, 226, 226);
+  text-align: center;
+}
+
+footer > a{
+  margin-left: 5px;
+  color: var(--white-color);
 }
 
 /* ------------------- Responsive Css ------------------- */
@@ -1409,6 +1429,17 @@ header > a{
 .left-container-show{
   transform: translateX(0);
 }
+
+@media screen and (max-width:532px) {
+  .form-container{
+    width: 100%;
+  }
+
+  .form-container > h1{
+    font-size: 24px;
+  }
+}
+
 
 @media screen and (max-width:480px) {
 

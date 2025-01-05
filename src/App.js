@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetails } from './features/userSlice';
 import Settings from './pages/Settings';
 import Header from './components/Header';
+import Footer from './components/Footer';
 const Login = lazy(()=>import('./pages/Login'));
 const Register = lazy(()=>import('./pages/Register'));
 const Chats = lazy(()=>import('./pages/Chats'));
@@ -54,6 +55,7 @@ const App = () => {
           </Routes>
         </Suspense>
       </div>
+      <Footer/>
     </Router>
   ) 
 }

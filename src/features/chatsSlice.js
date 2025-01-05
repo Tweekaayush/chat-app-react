@@ -369,6 +369,10 @@ const chatsSlice = createSlice({
         },
         clearUsers: (state)=>{
             state.data.users = []
+        },
+        clearBlocked: (state)=>{
+            state.data.isCurrentUserBlocked = false
+            state.data.isReceiverBlocked = false
         }
     },
     extraReducers: (builder) =>{
@@ -408,6 +412,6 @@ const chatsSlice = createSlice({
     }
 })
 
-export const {setGroupList, checkBlocked, setMessages, setChatList, clearUsers, clearAllChatData, clearCurrentChat} = chatsSlice.actions
+export const {clearBlocked, setGroupList, checkBlocked, setMessages, setChatList, clearUsers, clearAllChatData, clearCurrentChat} = chatsSlice.actions
 
 export default chatsSlice.reducer
