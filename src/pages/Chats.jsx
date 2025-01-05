@@ -8,6 +8,7 @@ import {useSelector} from 'react-redux'
 import { useRef } from 'react'
 import GroupsIcon2 from '@mui/icons-material/Groups';
 import AddGroup from '../components/AddGroup'
+import CurrentChatInfo from '../components/CurrentChatInfo'
 
 const Chats = () => {
 
@@ -16,6 +17,7 @@ const Chats = () => {
     const {currentChat} = useSelector(state=>state.chats.data)
     const [search, setSearch] = useState('')
     const [open, setOpen] = useState(true)
+    const [chatInfo, setChatInfo] = useState(false)
     const ref = useRef(null)
 
     const handleClickOutside = () =>{
@@ -24,11 +26,18 @@ const Chats = () => {
     }
 
     useEffect(()=>{
+        if(Object.keys(currentChat).length !== 0) {
+            setOpen(false)
+            setChatInfo(false)
+        }
+            else setOpen(true)
+    }, [currentChat])
+
+    useEffect(()=>{
         window.addEventListener('resize', handleClickOutside)
         document.title = 'ChatApp | Chats'
         return ()=>window.removeEventListener('resize', handleClickOutside)
       }, [])
-    
 
   return (
     <div className="container">
@@ -38,7 +47,7 @@ const Chats = () => {
         <div className={`container-left ${open?'left-container-show':''}`} ref={ref}>
             <ChatListHeader />
             <SearchUser setAddUserStatus={setAddUserStatus} search={search} setSearch={setSearch}/>
-            <ChatsList search={search} setOpen={setOpen} />
+            <ChatsList search={search}/>
             <div className="add-buttons">
                 <div className="add-user-btn" onClick={()=>setAddUserStatus(true)}>
                     <span>+</span>
@@ -53,7 +62,7 @@ const Chats = () => {
         <div className="container-right">
             {
                 Object.keys(currentChat).length !== 0?(
-                    <ActiveChat setOpen={setOpen}/>
+                        !chatInfo?<ActiveChat setChatInfo={setChatInfo}/>: <CurrentChatInfo setChatInfo={setChatInfo}/>
                 ): (
                     <div className='empty-chat-container'>
                         <h1>Select a chat to start a conversation.</h1>

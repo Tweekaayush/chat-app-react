@@ -5,7 +5,7 @@ import {useDispatch} from 'react-redux'
 import { clearCurrentChat, toggleBlock } from '../features/chatsSlice';
 import BlockIcon from '@mui/icons-material/Block';
 
-const ActiveChatHeader = ({setOpen}) => {
+const ActiveChatHeader = ({setChatInfo}) => {
 
   const {currentChat: {username, profileImg, status, groupName, groupImg, groupStatus}, isCurrentUserBlocked, currentChat} = useSelector(state=>state.chats.data)
   const dispatch = useDispatch()
@@ -16,7 +16,6 @@ const ActiveChatHeader = ({setOpen}) => {
   
   const handleBack = () =>{
     dispatch(clearCurrentChat())
-    setOpen(true)
   }
 
   return (
@@ -27,12 +26,11 @@ const ActiveChatHeader = ({setOpen}) => {
               <div className="active-chat-header-info">
                 <ArrowBackIcon onClick={handleBack} />
                 <div>
-                  <img src={profileImg} alt={username} className='profile-avatar'/>
-                  <div>
+                  <img src={profileImg} alt={username} className='profile-avatar' onClick={()=>setChatInfo(true)}/>
+                  <div onClick={()=>setChatInfo(true)}>
                     <h2>{username}</h2>
                     <p>{status}</p>
                   </div>
-
               </div>
               </div>
               <div>
@@ -51,8 +49,8 @@ const ActiveChatHeader = ({setOpen}) => {
               <div className="active-chat-header-info">
                 <ArrowBackIcon onClick={handleBack} />
                 <div>
-                  <img src={groupImg} alt={groupName} className='profile-avatar'/>
-                  <div>
+                  <img src={groupImg} alt={groupName} className='profile-avatar'onClick={()=>setChatInfo(true)}/>
+                  <div onClick={()=>setChatInfo(true)}>
                     <h2>{groupName}</h2>
                     <p>{groupStatus}</p>
                   </div>

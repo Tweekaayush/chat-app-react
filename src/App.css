@@ -560,8 +560,8 @@ header > a{
 
 .active-chat-header-info > svg{
   color: var(--text-color-1);
-  height: 100%;
   cursor: pointer;
+  margin: auto;
 }
 
 .active-chat-header-info > div{
@@ -1186,6 +1186,128 @@ header > a{
   border: 1px solid var(--text-color-3);
 }
 
+/* ------------------- Current Chat Info ------------------- */
+
+.current-chat-info-container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.current-chat-upper{
+  display: flex;
+  position: relative;
+  border-bottom: 2px solid var(--bg-color-3);
+  padding-bottom: 16px;
+}
+
+.current-chat-upper > svg{
+  font-size: 24px;
+  color: var(--text-color-1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.current-chat-upper-info{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.current-chat-upper-info > img{
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px;
+}
+
+.current-chat-upper-info > h1{
+  font-size: 24px;
+  color: var(--text-color-1);
+}
+
+.current-chat-upper-info > p{
+  font-size: 16px;
+  color: var(--text-color-3);
+  margin-top: 6px;
+}
+
+.current-chat-middle{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+}
+
+.current-chat-middle > h1{
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: var(--text-color-1);
+}
+
+.current-chat-list{
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  gap: 5px;
+}
+
+.current-chat-bottom{
+  width: 100%;
+}
+
+.current-chat-bottom > button{
+  background-color: red;
+  color: var(--text-color-1);
+  border: none;
+  width: 100%;
+  font-size: 18px;
+  text-transform: capitalize;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.current-chat-bottom > button:disabled{
+  cursor:not-allowed;
+}
+
+.member-list-item{
+  background-color: var(--bg-color-1);
+  border-radius: 5px;
+  padding: 16px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.member-list-item > div{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.member-list-item > div > span{
+  font-size: 14px;
+  color: var(--bg-color-4);
+  border: 1px solid var(--bg-color-4);
+  padding: 2px 4px;
+  border-radius: 5px;
+}
+
+.member-list-item > div > h2{
+  font-size: 16px;
+  color: var(--text-color-1);
+}
+
+/* ------------------- Responsive Css ------------------- */
+
 @media screen and (max-width: 1024px) {
   .container{
     width: 100%;
@@ -1327,6 +1449,28 @@ header > a{
     font-size: 18px;
   }
 
+  .current-chat-upper-info > img{
+    height: 60px;
+    width: 60px;
+  }
+
+  .current-chat-middle > h1, .current-chat-upper-info > h1{
+    font-size: 20px;
+  }
+
+  .current-chat-upper-info > p{
+    font-size: 14px;
+  }
+
+  .member-list-item > div > span{
+    font-size: 12px;
+    padding: 1px 4px;
+  }
+  
+  .member-list-item > div > h2{
+    font-size: 14px;
+  }
+  
 }
 
 .left-container-show > button{

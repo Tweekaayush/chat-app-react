@@ -4,7 +4,7 @@ import ActiveChatInput from './ActiveChatInput'
 import {useSelector} from 'react-redux'
 import {format} from 'timeago.js'
 
-const ActiveChat = ({setOpen}) => {
+const ActiveChat = ({setChatInfo}) => {
 
     const {messages, currentChat: {profileImg: receiverProfileImg}, currentChat} = useSelector(state=>state.chats.data)
     const {uid, profileImg} = useSelector(state=>state.user.data)
@@ -17,7 +17,7 @@ const ActiveChat = ({setOpen}) => {
     
   return (
     <div className="active-chat-container">
-        <ActiveChatHeader setOpen={setOpen}/>
+        <ActiveChatHeader setChatInfo={setChatInfo}/>
         {
             currentChat?.admin === undefined?(
                 <div className="active-chat-messages-container">

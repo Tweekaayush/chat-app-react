@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import { checkBlocked, getChatList, getGroupList, getMessages, updateChatList, updateGroupList } from '../features/chatsSlice'
 import { format } from 'timeago.js'
 
-const ChatsList = ({search, setOpen}) => {
+const ChatsList = ({search}) => {
 
     const {chatList, groupList, currentChat} = useSelector(state=>state.chats.data)
     const {uid, blocked} = useSelector(state=>state.user.data)
@@ -11,7 +11,7 @@ const ChatsList = ({search, setOpen}) => {
     const [list, setList] = useState([])
 
     const handleGroupClick = (group) =>{
-        setOpen(false)
+
         dispatch(getMessages(group))
         const chatIndex = chatList.findIndex(
             (item) => item.chatId === group.chatId
@@ -34,8 +34,6 @@ const ChatsList = ({search, setOpen}) => {
     }
 
     const handleClick = (chat) =>{
-
-        setOpen(false)
 
         if(chat.chatId === currentChat.chatId) return
 
