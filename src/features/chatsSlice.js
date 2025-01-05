@@ -11,7 +11,8 @@ const initialState = {
         messages: [],
         currentChat: {},
         isCurrentUserBlocked: false,
-        isReceiverBlocked: false
+        isReceiverBlocked: false,
+        commonGroups: []
     }
 }
 
@@ -300,6 +301,33 @@ export const toggleBlock = createAsyncThunk('toggleBlock', async(payload, {getSt
     }
 })
 
+export const getCommonGroups = createAsyncThunk('getCommonGroups', async(payload, {getState, dispatch})=>{
+    try {
+        
+        const {uid} = getState().user.data
+
+        const userGroupData = await getDoc(doc(db, 'groupChats', uid))
+        const receiverGroupData = await getDoc(doc(db, 'groupChats', payload))
+
+
+        let commonGroup = []
+
+        userGroupData.data().chats.forEach((userGroup)=>{
+            receiverGroupData.data().chats.forEach((receiverGroup)=>{
+                if(receiverGroup.chatId === userGroup.chatId){
+                    commonGroup = [...commonGroup, userGroup]
+                    return
+                }
+            })
+        })
+
+        return commonGroup
+
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 const chatsSlice = createSlice({
     name: 'chats',
     initialState,
@@ -337,6 +365,7 @@ const chatsSlice = createSlice({
             state.data.messages = []
             state.data.isCurrentUserBlocked = false
             state.data.isReceiverBlocked = false
+            state.data.commonGroups = []
         },
         clearUsers: (state)=>{
             state.data.users = []
@@ -362,6 +391,17 @@ const chatsSlice = createSlice({
             state.data.isReceiverBlocked = action.payload
         })
         builder.addCase(toggleBlock.rejected, (state, action)=>{
+            state.loading = false
+            state.error = action.payload
+        })
+        builder.addCase(getCommonGroups.pending, (state)=>{
+            state.loading = true
+        })
+        builder.addCase(getCommonGroups.fulfilled, (state, action)=>{
+            state.loading = false
+            state.data.commonGroups = action.payload
+        })
+        builder.addCase(getCommonGroups.rejected, (state, action)=>{
             state.loading = false
             state.error = action.payload
         })

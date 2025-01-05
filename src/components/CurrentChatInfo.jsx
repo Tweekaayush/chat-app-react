@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 const CurrentChatInfo = ({setChatInfo}) => {
 
-    const {currentChat: {profileImg, username, groupName, groupImg, status, members, admin}, isCurrentUserBlocked, isReceiverBlocked} = useSelector(state=>state.chats.data)
+    const {currentChat: {profileImg, username, groupName, groupImg, status, members, admin}, isCurrentUserBlocked, isReceiverBlocked, commonGroups} = useSelector(state=>state.chats.data)
     const {data} = useSelector(state=>state.user)
     const dispatch = useDispatch()
 
@@ -53,7 +53,21 @@ const CurrentChatInfo = ({setChatInfo}) => {
                 </div>
             ):(
                 <div className="current-chat-middle">
-                    <h1>Groups in common</h1>
+                    <h1>You have {commonGroups.length} Groups in common.</h1>
+                    { commonGroups?.length !== 0 &&
+                        <ul className="current-chat-list">
+                                {
+                                    commonGroups?.map((group)=>{
+                                        return <li key={group.chatId} className='member-list-item'>
+                                                    <img src={group.groupImg} alt={group.groupName} className='profile-avatar' />
+                                                    <div>
+                                                        <h2>{group.groupName}</h2>
+                                                    </div>
+                                                </li>
+                                    })
+                                }
+                        </ul>
+                    }
                 </div>
             )
         }

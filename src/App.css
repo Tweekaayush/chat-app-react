@@ -1404,15 +1404,6 @@ header > a{
     height: 30px;
   }
 
-  .active-chat-header-info > div > div > h2{
-    font-size: 14px;
-  }
-
-  .active-chat-header-info > div > div > p{
-    font-size: 12px;
-  }
-
-
   .active-chat-message-info > p:first-of-type{
     font-size: 16px;
     padding: 8px 16px;
