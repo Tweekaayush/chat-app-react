@@ -328,6 +328,55 @@ export const getCommonGroups = createAsyncThunk('getCommonGroups', async(payload
     }
 })
 
+export const exitGroup = createAsyncThunk('exitGroup', async(payload, {getState, dispatch})=>{
+    try {
+        const {uid} = getState().user.data
+        const {admin, members, chatId} = getState().chats.data.currentChat
+        let newAdmin = ''
+
+        if(uid === admin){
+            newAdmin = members[0]?.uid
+        }
+
+        const groupChatSnapshot = await getDoc(doc(db, 'groupChats', uid))
+
+        if(groupChatSnapshot.exists()){
+
+            const filteredGroupChat = groupChatSnapshot.data().chats.filter((group)=>group.chatId !== chatId)
+
+            members.forEach(async(member)=>{
+
+                const memberGroupsSnapshot = await getDoc(doc(db, 'groupChats', member.uid))
+
+                const memberChat = memberGroupsSnapshot.data().chats
+
+                const index = memberChat.findIndex((g) => g.chatId === chatId)
+
+                if(admin === uid){
+                    memberChat[index].admin = newAdmin
+                }
+
+                memberChat[index].members = memberChat[index].members.filter((m)=>m.uid !== uid)
+
+                await updateDoc(doc(db, 'groupChats', member.uid), {
+                    chats: memberChat,
+                });
+
+            })
+
+            await updateDoc(doc(db, 'groupChats', uid), {
+                chats: filteredGroupChat,
+            });
+
+        }
+        dispatch(clearCurrentChat())       
+        
+    } catch (error) {
+        console.log(error)
+    }   
+
+})
+
 const chatsSlice = createSlice({
     name: 'chats',
     initialState,

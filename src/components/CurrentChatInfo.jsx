@@ -1,7 +1,7 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {toggleBlock} from '../features/chatsSlice'
+import {exitGroup, toggleBlock} from '../features/chatsSlice'
 import { useDispatch } from 'react-redux';
 
 const CurrentChatInfo = ({setChatInfo}) => {
@@ -73,7 +73,7 @@ const CurrentChatInfo = ({setChatInfo}) => {
         }
         <div className="current-chat-bottom">
             {
-                admin?<></> :<button disabled={isCurrentUserBlocked} onClick={()=>dispatch(toggleBlock())} >
+                admin?<button onClick={()=>dispatch(exitGroup())}>Exit Group</button> :<button disabled={isCurrentUserBlocked} onClick={()=>dispatch(toggleBlock())} >
                     {isReceiverBlocked?'Blocked':'Block'}
                 </button>
             }

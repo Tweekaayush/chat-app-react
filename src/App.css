@@ -287,7 +287,8 @@ header > a{
 }
 
 .error-message{
-  color: red;
+  font-size: 14px;
+  color: var(--red-color);
 }
 
 /* ------------------- Chats Page ------------------- */
@@ -1285,6 +1286,12 @@ header > a{
   flex-direction: column;
   list-style: none;
   gap: 5px;
+  overflow-y: scroll;
+  padding-bottom: 16px;
+}
+
+.current-chat-list::-webkit-scrollbar{
+  width: 0;
 }
 
 .current-chat-bottom{

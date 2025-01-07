@@ -112,7 +112,7 @@ const AddGroup = ({addGroupStatus, setAddGroupStatus}) => {
                 <label htmlFor="members">Members</label>
                 <div className="members">
                     {members.map((member)=>{
-                        return <div>
+                        return <div key={member.uid}>
                                     <h3>
                                         {member.username}
                                     </h3>
