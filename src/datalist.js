@@ -116,11 +116,11 @@ export const themes = [
     },
     {
         id: 3,
-        value: 'sunrise'
+        value: 'forest'
     },
     {
         id: 4,
-        value: 'lavender'
+        value: 'sunset'
     },
     {
         id: 5,

@@ -103,16 +103,14 @@ const ChatsList = ({search}) => {
                             <div>
                                 <h2>{chat.username}</h2>
                                 {  chat.lastMessage && 
-                                <div>
-                                    <p>
+                                <p>
                                         {chat.lastMessage}  
-                                    </p>
-                                    <span>
-                                        • {format(chat.updatedAt)}
-                                    </span>
-                                </div>
+                                </p>
                                 }
                             </div>
+                            <p>
+                                {format(chat.updatedAt)}
+                            </p>
                         </div>
                     ):(
                         <div key={chat.chatId} className={`${chat.isSeen?'chat-list-item':'chat-list-item unseen'}`} onClick={()=>handleGroupClick(chat)}>
@@ -120,16 +118,14 @@ const ChatsList = ({search}) => {
                             <div>
                                 <h2>{chat.groupName}</h2>
                                 {  chat.lastMessage &&
-                                    <div>
-                                        <p>
-                                            {chat.lastMessage}  
-                                        </p>
-                                        <span>
-                                            • {format(chat.updatedAt)}
-                                        </span>
-                                    </div>
+                                    <p>
+                                        {chat.lastMessage}  
+                                    </p>
                                 }
                             </div>
+                            <p>
+                                {format(chat.updatedAt)}
+                            </p>
                         </div>
                     )
                         

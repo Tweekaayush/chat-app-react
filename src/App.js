@@ -38,10 +38,6 @@ const App = () => {
 
   return (
     <Router>
-      <div className="body-background">
-        <div className="body-bg-shape"></div>
-        <div className="body-bg-shape"></div>
-      </div>
       <Header/>
       <div className="body-container">
         <Suspense fallback={<>loading...</>}>

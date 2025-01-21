@@ -53,7 +53,7 @@ const CurrentChatInfo = ({setChatInfo}) => {
                 </div>
             ):(
                 <div className="current-chat-middle">
-                    <h1>You have {commonGroups.length} Groups in common.</h1>
+                    <h1>You have {commonGroups.length} Group(s) in common.</h1>
                     { commonGroups?.length !== 0 &&
                         <ul className="current-chat-list">
                                 {
